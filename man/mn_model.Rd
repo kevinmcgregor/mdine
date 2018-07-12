@@ -2,20 +2,19 @@
 % Please edit documentation in R/mn_model.R
 \name{mn_model}
 \alias{mn_model}
-\title{TEST}
+\title{Run multinomial normal model through STAN}
 \usage{
-mn_model(x, y, ...)
+mn_model(inData, iter, chains, mc.cores, ...)
 }
 \arguments{
-\item{x}{Numeric vector of input values.}
-
-\item{y}{Numberic vector of output values.}
+\item{inData}{List containing all necessary elements for the input to the model}
 
 \item{...}{Arguments passed to `rstan::sampling` (e.g. iter, chains).}
 }
 \value{
-An object of class `stanfit` returned by `rstan::sampling`
+An object of class `stanfit` containing MCMC samples for the multinomial normal model
 }
 \description{
-TEST
+A function to run the multinomial normal model through STAN.  This is not meant to be called
+directly (use `mdine` instead).
 }

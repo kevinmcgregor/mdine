@@ -1,8 +1,8 @@
 Package: mdine
-Version: 0.0.0.9000
-Title: What the Package Does (One Line, Title Case)
-Description: What the package does (one paragraph).
-Authors@R: person("First", "Last", , "first.last@example.com", c("aut", "cre"))
+Version: 0.0.0.9001
+Title: Microbiome differential network estimation 
+Description: Estimates precision matrix networks for two groups (as well as their difference) in microbiome 16S sequencing data.
+Authors@R: person("Kevin", "McGregor", , "kevin.mcgregor@mail.mcgill.ca", c("aut", "cre"))
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
