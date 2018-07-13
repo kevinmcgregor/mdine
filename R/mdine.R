@@ -42,10 +42,13 @@ mdine <- function(Y, X, Z=NULL, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
                    offset=offset)
     fit <- mn_model(s.data, iter, chains, mc.cores, ...)
     post_mean <- extract_post_mean(fit, n, k, p, is.null(lambda))
+    ci <- extract_ci(fit, n, k, p, is.null(lambda), quant)
   } else if (method=="MAP") {
     #TODO
   }
 
-  return(list(stan.fit=fit, post_mean=post_mean, ci=NULL))
+  if (!is.null(lambda)) post_mean$lambda <- lambda
+
+  return(list(stan.fit=fit, post_mean=post_mean, ci=ci))
 }
 

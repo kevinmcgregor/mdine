@@ -1,4 +1,5 @@
-
+#' @import nnet
+#' @import MASS
 get_lam_mle <- function(counts, covar, status) {
   ref <- NCOL(counts)
   n.spec <- ref-1
