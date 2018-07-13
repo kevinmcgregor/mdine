@@ -19,35 +19,32 @@ extract_post_mean <- function(stan.fit, n, k, p, lam.null) {
 }
 
 extract_ci <- function(stan.fit,n,k,p,lam.null,quant) {
-  print("begin extract_ci")
   col <- paste0(as.character(quant*100),"%")
-  param_smry = rstan::summary(stan.fit, pars=c("beta","lin_pred_rand","invsigma0","invsigma1","invsigma_diff",
+  param_smry <- rstan::summary(stan.fit, pars=c("beta","lin_pred_rand","invsigma0","invsigma1","invsigma_diff",
                                         "frob","natcon"))$summary
-  beta_lower = matrix(param_smry[grep("beta",rownames(param_smry)),col[1]],p,k-1,byrow=TRUE)
-  beta_upper = matrix(param_smry[grep("beta",rownames(param_smry)),col[2]],p,k-1,byrow=TRUE)
-  w_lower = matrix(param_smry[grep("lin_pred_rand",rownames(param_smry)),col[1]],n,k-1,byrow=TRUE)
-  w_upper = matrix(param_smry[grep("lin_pred_rand",rownames(param_smry)),col[2]],n,k-1,byrow=TRUE)
-  probs_lower = matrix(param_smry[grep("probs",rownames(param_smry)),col[1]],n,k,byrow=TRUE)
-  probs_upper = matrix(param_smry[grep("probs",rownames(param_smry)),col[2]],n,k,byrow=TRUE)
-  invsigma0_lower = matrix(param_smry[grep("invsigma0",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
-  invsigma0_upper = matrix(param_smry[grep("invsigma0",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
-  invsigma1_lower = matrix(param_smry[grep("invsigma1",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
-  invsigma1_upper = matrix(param_smry[grep("invsigma1",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
-  invsigma_diff_lower = matrix(param_smry[grep("invsigma_diff",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
-  invsigma_diff_upper = matrix(param_smry[grep("invsigma_diff",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
-  frob_lower = param_smry[grep("frob",rownames(param_smry)),col[1]]
-  frob_upper = param_smry[grep("frob",rownames(param_smry)),col[2]]
-  natcon_lower = param_smry[grep("natcon",rownames(param_smry)),col[1]]
-  natcon_upper = param_smry[grep("natcon",rownames(param_smry)),col[2]]
+  beta_lower <- matrix(param_smry[grep("beta",rownames(param_smry)),col[1]],p,k-1,byrow=TRUE)
+  beta_upper <- matrix(param_smry[grep("beta",rownames(param_smry)),col[2]],p,k-1,byrow=TRUE)
+  w_lower <- matrix(param_smry[grep("lin_pred_rand",rownames(param_smry)),col[1]],n,k-1,byrow=TRUE)
+  w_upper <- matrix(param_smry[grep("lin_pred_rand",rownames(param_smry)),col[2]],n,k-1,byrow=TRUE)
+  probs_lower <- matrix(param_smry[grep("probs",rownames(param_smry)),col[1]],n,k,byrow=TRUE)
+  probs_upper <- matrix(param_smry[grep("probs",rownames(param_smry)),col[2]],n,k,byrow=TRUE)
+  invsigma0_lower <- matrix(param_smry[grep("invsigma0",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
+  invsigma0_upper <- matrix(param_smry[grep("invsigma0",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
+  invsigma1_lower <- matrix(param_smry[grep("invsigma1",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
+  invsigma1_upper <- matrix(param_smry[grep("invsigma1",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
+  invsigma_diff_lower <- matrix(param_smry[grep("invsigma_diff",rownames(param_smry)),col[1]],k-1,k-1,byrow=TRUE)
+  invsigma_diff_upper <- matrix(param_smry[grep("invsigma_diff",rownames(param_smry)),col[2]],k-1,k-1,byrow=TRUE)
+  frob_lower <- param_smry[grep("frob",rownames(param_smry)),col[1]]
+  frob_upper <- param_smry[grep("frob",rownames(param_smry)),col[2]]
+  natcon_lower <- param_smry[grep("natcon",rownames(param_smry)),col[1]]
+  natcon_upper <- param_smry[grep("natcon",rownames(param_smry)),col[2]]
   if (lam.null) {
-    lambda_lower = rstan::summary(stan.fit, pars=c("lambda"))$summary[,col[1]]
-    lambda_upper = rstan::summary(stan.fit, pars=c("lambda"))$summary[,col[2]]
+    lambda_lower <- rstan::summary(stan.fit, pars=c("lambda"))$summary[,col[1]]
+    lambda_upper <- rstan::summary(stan.fit, pars=c("lambda"))$summary[,col[2]]
   } else {
-    lambda_lower = NULL
-    lambda_upper = NULL
+    lambda_lower <- NULL
+    lambda_upper <- NULL
   }
-
-  print("end extract_ci")
 
   return(list(
     beta = list(lower=beta_lower, upper=beta_upper),
