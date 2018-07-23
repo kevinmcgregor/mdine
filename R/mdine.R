@@ -41,8 +41,8 @@ mdine <- function(Y, X, Z=NULL, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
     s.data <- list(counts=Y, covars=X, status=Z, n=n, k=k, p=p, lam_mle=lam_mle,
                    offset=offset)
     fit <- mn_model(s.data, iter, chains, mc.cores, ...)
-    post_mean <- extract_post_mean(fit, n, k, p, is.null(lambda))
-    ci <- extract_ci(fit, n, k, p, is.null(lambda), quant)
+    post_mean <- extract_post_mean(fit, is.null(lambda))
+    ci <- extract_ci(fit, is.null(lambda), quant=quant)
   } else if (method=="MAP") {
     #TODO
   }

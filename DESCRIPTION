@@ -1,5 +1,5 @@
 Package: mdine
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Title: Microbiome differential network estimation 
 Description: Estimates precision matrix networks for two groups (as well as their difference) in microbiome 16S sequencing data.
 Authors@R: person("Kevin", "McGregor", , "kevin.mcgregor@mail.mcgill.ca", c("aut", "cre"))
