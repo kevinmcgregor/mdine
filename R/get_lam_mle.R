@@ -1,5 +1,5 @@
-#' @import nnet
-#' @import MASS
+#' @importFrom nnet multinom
+#' @importFrom MASS ginv
 get_lam_mle <- function(counts, covar, status) {
   ref <- NCOL(counts)
   n.spec <- ref-1

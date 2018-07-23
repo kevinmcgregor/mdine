@@ -40,6 +40,7 @@ extract_ci <- function(stan.fit,lam.null,quant) {
 }
 
 # Get the posterior mean of parameter and put it in matrix with appropriate dimension
+#' @importFrom rstan get_posterior_mean
 get_post_mean_matrix <- function(stan.fit, par) {
   dim <- stan.fit@par_dims[[par]]
   if (is.na(dim[1])) {
@@ -53,6 +54,7 @@ get_post_mean_matrix <- function(stan.fit, par) {
 
 
 # Get the credible interval of a single parameter from a stanfit and put into matrix (if appropriate)
+#' @importFrom rstan summary
 get_ci_stanfit <- function(stan.fit, par, quant) {
   col <- 4:(3+length(quant))
   param_smry <- rstan::summary(stan.fit, pars=par, probs=quant)$summary[,col]
