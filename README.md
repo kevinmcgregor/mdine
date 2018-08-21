@@ -1,4 +1,5 @@
 # mdine
+*M*icrobiome *Di*fferential *N*etwork *E*stimation (**mdine**).
 
 ## Installation
 The first step to installing **mdine** is to first install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  The steps on how to do this are different based on your OS:
