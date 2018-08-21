@@ -18,5 +18,5 @@ if (!require(devtools)) {
   install.packages("devtools")
   library(devtools)
 }
-install_github("kevinmcgregor/mdine")
+install_github("kevinmcgregor/mdine", dependencies=TRUE)
 ```
