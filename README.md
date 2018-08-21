@@ -1,5 +1,6 @@
 # mdine
-### Installation
+
+## Installation
 In order to install **mdine** you'll first need to make sure to install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  Instructions based on OS are given below:
 
 ### Mac/Linux
