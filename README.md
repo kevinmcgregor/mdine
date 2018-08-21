@@ -1,5 +1,5 @@
 # mdine
-*M*icrobiome *Di*fferential *N*etwork *E*stimation (**mdine**).
+**M**icrobiome **Di**fferential **N**etwork **E**stimation (**mdine**) allows the estimation of OTU co-occurrence networks within two separate groups, where the networks are defined through precision matrices.  The difference between the two precision matrices is also estimated, along with corresponding interval estimates.
 
 ## Installation
 The first step to installing **mdine** is to first install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  The steps on how to do this are different based on your OS:
