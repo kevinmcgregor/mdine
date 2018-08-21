@@ -5,10 +5,11 @@ The first step to installing **mdine** is to first install [rstan](http://mc-sta
 
 ### Mac/Linux
 * Install **rstan** by following these [Mac/Linux instructions](https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Mac-or-Linux)
+  * Make sure you have a C++ toolchain and configuration installed as described in the instructions.
 
 ### Windows
 * Install **rstan** by following these [Windows instructions](https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Windows)
-  * Make sure to **rtools** as described in the instructions.
+  * Make sure to install **rtools** as described in the instructions.
 
 Once **rstan** has been successfully installed, run the following code to install **mdine**:
 * Run the following code
