@@ -40,7 +40,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_mn_model");
-    reader.add_event(132, 132, "end", "model_mn_model");
+    reader.add_event(134, 134, "end", "model_mn_model");
     return reader;
 }
 
@@ -145,6 +145,7 @@ private:
     vector_d status;
     vector_d offset;
     matrix_d covars;
+    double n_real;
     matrix_d Q_ast;
     matrix_d R_ast;
     matrix_d R_ast_inverse;
@@ -282,58 +283,65 @@ public:
             current_statement_begin__ = 30;
             // initialize data variables
             current_statement_begin__ = 33;
+            n_real = double(0);
+            stan::math::fill(n_real,DUMMY_VAR__);
+            current_statement_begin__ = 34;
             validate_non_negative_index("Q_ast", "n", n);
             validate_non_negative_index("Q_ast", "p", p);
             Q_ast = matrix_d(static_cast<Eigen::VectorXd::Index>(n),static_cast<Eigen::VectorXd::Index>(p));
             stan::math::fill(Q_ast,DUMMY_VAR__);
-            current_statement_begin__ = 34;
+            current_statement_begin__ = 35;
             validate_non_negative_index("R_ast", "p", p);
             validate_non_negative_index("R_ast", "p", p);
             R_ast = matrix_d(static_cast<Eigen::VectorXd::Index>(p),static_cast<Eigen::VectorXd::Index>(p));
             stan::math::fill(R_ast,DUMMY_VAR__);
-            current_statement_begin__ = 35;
+            current_statement_begin__ = 36;
             validate_non_negative_index("R_ast_inverse", "p", p);
             validate_non_negative_index("R_ast_inverse", "p", p);
             R_ast_inverse = matrix_d(static_cast<Eigen::VectorXd::Index>(p),static_cast<Eigen::VectorXd::Index>(p));
             stan::math::fill(R_ast_inverse,DUMMY_VAR__);
-            current_statement_begin__ = 36;
+            current_statement_begin__ = 37;
             inv_lam_mle = double(0);
             stan::math::fill(inv_lam_mle,DUMMY_VAR__);
 
-            current_statement_begin__ = 37;
-            stan::math::assign(Q_ast, multiply(stan::model::rvalue(qr_Q(covars), stan::model::cons_list(stan::model::index_omni(), stan::model::cons_list(stan::model::index_min_max(1, p), stan::model::nil_index_list())), "qr_Q(covars)"),sqrt((n - 1))));
             current_statement_begin__ = 38;
-            stan::math::assign(R_ast, divide(stan::model::rvalue(qr_R(covars), stan::model::cons_list(stan::model::index_min_max(1, p), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "qr_R(covars)"),sqrt((n - 1))));
+            stan::math::assign(n_real, n);
             current_statement_begin__ = 39;
-            stan::math::assign(R_ast_inverse, inverse(R_ast));
+            stan::math::assign(Q_ast, multiply(stan::model::rvalue(qr_Q(covars), stan::model::cons_list(stan::model::index_omni(), stan::model::cons_list(stan::model::index_min_max(1, p), stan::model::nil_index_list())), "qr_Q(covars)"),sqrt((n_real - 1))));
             current_statement_begin__ = 40;
+            stan::math::assign(R_ast, divide(stan::model::rvalue(qr_R(covars), stan::model::cons_list(stan::model::index_min_max(1, p), stan::model::cons_list(stan::model::index_omni(), stan::model::nil_index_list())), "qr_R(covars)"),sqrt((n_real - 1))));
+            current_statement_begin__ = 41;
+            stan::math::assign(R_ast_inverse, inverse(R_ast));
+            current_statement_begin__ = 42;
             stan::math::assign(inv_lam_mle, (1 / lam_mle));
 
             // validate transformed data
             current_statement_begin__ = 33;
+            check_greater_or_equal(function__,"n_real",n_real,0);
             current_statement_begin__ = 34;
             current_statement_begin__ = 35;
             current_statement_begin__ = 36;
+            current_statement_begin__ = 37;
             check_greater_or_equal(function__,"inv_lam_mle",inv_lam_mle,0);
 
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
-            current_statement_begin__ = 43;
+            current_statement_begin__ = 45;
             ++num_params_r__;
-            current_statement_begin__ = 44;
+            current_statement_begin__ = 46;
         validate_non_negative_index("theta", "p", p);
             validate_non_negative_index("theta", "(k - 1)", (k - 1));
             num_params_r__ += p * (k - 1);
-            current_statement_begin__ = 45;
+            current_statement_begin__ = 47;
             validate_non_negative_index("lin_pred_rand", "(k - 1)", (k - 1));
             validate_non_negative_index("lin_pred_rand", "n", n);
             num_params_r__ += (k - 1) * n;
-            current_statement_begin__ = 46;
+            current_statement_begin__ = 48;
             validate_non_negative_index("L0", "(k - 1)", (k - 1));
             validate_non_negative_index("L0", "(k - 1)", (k - 1));
             num_params_r__ += (((k - 1) * ((k - 1) + 1)) / 2 + ((k - 1) - (k - 1)) * (k - 1));
-            current_statement_begin__ = 47;
+            current_statement_begin__ = 49;
             validate_non_negative_index("L1", "(k - 1)", (k - 1));
             validate_non_negative_index("L1", "(k - 1)", (k - 1));
             num_params_r__ += (((k - 1) * ((k - 1) + 1)) / 2 + ((k - 1) - (k - 1)) * (k - 1));
@@ -510,39 +518,39 @@ public:
 
 
             // transformed parameters
-            current_statement_begin__ = 54;
+            current_statement_begin__ = 56;
             validate_non_negative_index("invsigma0", "(k - 1)", (k - 1));
             Eigen::Matrix<T__,Eigen::Dynamic,Eigen::Dynamic>  invsigma0(static_cast<Eigen::VectorXd::Index>((k - 1)),static_cast<Eigen::VectorXd::Index>((k - 1)));
             (void) invsigma0;  // dummy to suppress unused var warning
 
             stan::math::initialize(invsigma0, DUMMY_VAR__);
             stan::math::fill(invsigma0,DUMMY_VAR__);
-            current_statement_begin__ = 55;
+            current_statement_begin__ = 57;
             validate_non_negative_index("invsigma1", "(k - 1)", (k - 1));
             Eigen::Matrix<T__,Eigen::Dynamic,Eigen::Dynamic>  invsigma1(static_cast<Eigen::VectorXd::Index>((k - 1)),static_cast<Eigen::VectorXd::Index>((k - 1)));
             (void) invsigma1;  // dummy to suppress unused var warning
 
             stan::math::initialize(invsigma1, DUMMY_VAR__);
             stan::math::fill(invsigma1,DUMMY_VAR__);
-            current_statement_begin__ = 56;
+            current_statement_begin__ = 58;
             validate_non_negative_index("probs", "k", k);
             validate_non_negative_index("probs", "n", n);
             vector<Eigen::Matrix<T__,Eigen::Dynamic,1> > probs(n, (Eigen::Matrix<T__,Eigen::Dynamic,1> (static_cast<Eigen::VectorXd::Index>(k))));
             stan::math::initialize(probs, DUMMY_VAR__);
             stan::math::fill(probs,DUMMY_VAR__);
-            current_statement_begin__ = 57;
+            current_statement_begin__ = 59;
             T__ invlambda;
             (void) invlambda;  // dummy to suppress unused var warning
 
             stan::math::initialize(invlambda, DUMMY_VAR__);
             stan::math::fill(invlambda,DUMMY_VAR__);
-            current_statement_begin__ = 58;
+            current_statement_begin__ = 60;
             T__ lambda_half;
             (void) lambda_half;  // dummy to suppress unused var warning
 
             stan::math::initialize(lambda_half, DUMMY_VAR__);
             stan::math::fill(lambda_half,DUMMY_VAR__);
-            current_statement_begin__ = 59;
+            current_statement_begin__ = 61;
             validate_non_negative_index("lin_pred", "(k - 1)", (k - 1));
             validate_non_negative_index("lin_pred", "n", n);
             vector<Eigen::Matrix<T__,Eigen::Dynamic,1> > lin_pred(n, (Eigen::Matrix<T__,Eigen::Dynamic,1> (static_cast<Eigen::VectorXd::Index>((k - 1)))));
@@ -550,21 +558,21 @@ public:
             stan::math::fill(lin_pred,DUMMY_VAR__);
 
 
-            current_statement_begin__ = 62;
+            current_statement_begin__ = 64;
             for (int i = 1; i <= n; ++i) {
 
-                current_statement_begin__ = 63;
+                current_statement_begin__ = 65;
                 stan::math::assign(get_base1_lhs(lin_pred,i,"lin_pred",1), transpose(add(multiply(get_base1(covars,i,"covars",1),theta),get_base1(offset,i,"offset",1))));
-                current_statement_begin__ = 64;
+                current_statement_begin__ = 66;
                 stan::math::assign(get_base1_lhs(probs,i,"probs",1), softmax(append_row(get_base1(lin_pred_rand,i,"lin_pred_rand",1),0)));
             }
-            current_statement_begin__ = 76;
+            current_statement_begin__ = 78;
             stan::math::assign(invsigma0, multiply_lower_tri_self_transpose(L0));
-            current_statement_begin__ = 77;
-            stan::math::assign(invsigma1, multiply_lower_tri_self_transpose(L1));
             current_statement_begin__ = 79;
+            stan::math::assign(invsigma1, multiply_lower_tri_self_transpose(L1));
+            current_statement_begin__ = 81;
             stan::math::assign(invlambda, (1 / lambda));
-            current_statement_begin__ = 80;
+            current_statement_begin__ = 82;
             stan::math::assign(lambda_half, (lambda / 2));
 
             // validate transformed parameters
@@ -617,75 +625,75 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
-            current_statement_begin__ = 54;
-            stan::math::check_cov_matrix(function__,"invsigma0",invsigma0);
-            current_statement_begin__ = 55;
-            stan::math::check_cov_matrix(function__,"invsigma1",invsigma1);
             current_statement_begin__ = 56;
+            stan::math::check_cov_matrix(function__,"invsigma0",invsigma0);
+            current_statement_begin__ = 57;
+            stan::math::check_cov_matrix(function__,"invsigma1",invsigma1);
+            current_statement_begin__ = 58;
             for (int k0__ = 0; k0__ < n; ++k0__) {
                 stan::math::check_simplex(function__,"probs[k0__]",probs[k0__]);
             }
-            current_statement_begin__ = 57;
-            check_greater_or_equal(function__,"invlambda",invlambda,0);
-            current_statement_begin__ = 58;
-            check_greater_or_equal(function__,"lambda_half",lambda_half,0);
             current_statement_begin__ = 59;
+            check_greater_or_equal(function__,"invlambda",invlambda,0);
+            current_statement_begin__ = 60;
+            check_greater_or_equal(function__,"lambda_half",lambda_half,0);
+            current_statement_begin__ = 61;
 
             // model body
 
-            current_statement_begin__ = 84;
+            current_statement_begin__ = 86;
             for (int i = 1; i <= n; ++i) {
 
-                current_statement_begin__ = 85;
+                current_statement_begin__ = 87;
                 lp_accum__.add(multinomial_log<propto__>(get_base1(counts,i,"counts",1), get_base1(probs,i,"probs",1)));
             }
-            current_statement_begin__ = 89;
+            current_statement_begin__ = 91;
             for (int i = 1; i <= n; ++i) {
 
-                current_statement_begin__ = 90;
+                current_statement_begin__ = 92;
                 if (as_bool(logical_eq(get_base1(status,i,"status",1),0))) {
 
-                    current_statement_begin__ = 92;
+                    current_statement_begin__ = 94;
                     lp_accum__.add(multi_normal_prec_log<propto__>(get_base1(lin_pred_rand,i,"lin_pred_rand",1), get_base1(lin_pred,i,"lin_pred",1), invsigma0));
                 } else {
 
-                    current_statement_begin__ = 95;
+                    current_statement_begin__ = 97;
                     lp_accum__.add(multi_normal_prec_log<propto__>(get_base1(lin_pred_rand,i,"lin_pred_rand",1), get_base1(lin_pred,i,"lin_pred",1), invsigma1));
                 }
             }
-            current_statement_begin__ = 100;
+            current_statement_begin__ = 102;
             for (int j1 = 1; j1 <= (k - 1); ++j1) {
 
-                current_statement_begin__ = 102;
+                current_statement_begin__ = 104;
                 for (int j2 = 1; j2 <= j1; ++j2) {
 
-                    current_statement_begin__ = 103;
+                    current_statement_begin__ = 105;
                     if (as_bool(logical_eq(j1,j2))) {
 
-                        current_statement_begin__ = 104;
+                        current_statement_begin__ = 106;
                         lp_accum__.add(exponential_log<propto__>(get_base1(invsigma0,j1,j2,"invsigma0",1), lambda_half));
-                        current_statement_begin__ = 105;
+                        current_statement_begin__ = 107;
                         lp_accum__.add(exponential_log<propto__>(get_base1(invsigma1,j1,j2,"invsigma1",1), lambda_half));
                     } else {
 
-                        current_statement_begin__ = 107;
+                        current_statement_begin__ = 109;
                         lp_accum__.add(double_exponential_log<propto__>(get_base1(invsigma0,j1,j2,"invsigma0",1), 0, invlambda));
-                        current_statement_begin__ = 108;
+                        current_statement_begin__ = 110;
                         lp_accum__.add(double_exponential_log<propto__>(get_base1(invsigma1,j1,j2,"invsigma1",1), 0, invlambda));
                     }
                 }
             }
-            current_statement_begin__ = 113;
+            current_statement_begin__ = 115;
             for (int j1 = 1; j1 <= p; ++j1) {
 
-                current_statement_begin__ = 114;
+                current_statement_begin__ = 116;
                 for (int j2 = 1; j2 <= (k - 1); ++j2) {
 
-                    current_statement_begin__ = 115;
+                    current_statement_begin__ = 117;
                     lp_accum__.add(normal_log<propto__>(get_base1(theta,j1,j2,"theta",1), 0, 10000));
                 }
             }
-            current_statement_begin__ = 120;
+            current_statement_begin__ = 122;
             lp_accum__.add(exponential_log<propto__>(lambda, inv_lam_mle));
 
         } catch (const std::exception& e) {
@@ -840,39 +848,39 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
-            current_statement_begin__ = 54;
+            current_statement_begin__ = 56;
             validate_non_negative_index("invsigma0", "(k - 1)", (k - 1));
             matrix_d invsigma0(static_cast<Eigen::VectorXd::Index>((k - 1)),static_cast<Eigen::VectorXd::Index>((k - 1)));
             (void) invsigma0;  // dummy to suppress unused var warning
 
             stan::math::initialize(invsigma0, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(invsigma0,DUMMY_VAR__);
-            current_statement_begin__ = 55;
+            current_statement_begin__ = 57;
             validate_non_negative_index("invsigma1", "(k - 1)", (k - 1));
             matrix_d invsigma1(static_cast<Eigen::VectorXd::Index>((k - 1)),static_cast<Eigen::VectorXd::Index>((k - 1)));
             (void) invsigma1;  // dummy to suppress unused var warning
 
             stan::math::initialize(invsigma1, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(invsigma1,DUMMY_VAR__);
-            current_statement_begin__ = 56;
+            current_statement_begin__ = 58;
             validate_non_negative_index("probs", "k", k);
             validate_non_negative_index("probs", "n", n);
             vector<vector_d> probs(n, (vector_d(static_cast<Eigen::VectorXd::Index>(k))));
             stan::math::initialize(probs, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(probs,DUMMY_VAR__);
-            current_statement_begin__ = 57;
+            current_statement_begin__ = 59;
             double invlambda(0.0);
             (void) invlambda;  // dummy to suppress unused var warning
 
             stan::math::initialize(invlambda, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(invlambda,DUMMY_VAR__);
-            current_statement_begin__ = 58;
+            current_statement_begin__ = 60;
             double lambda_half(0.0);
             (void) lambda_half;  // dummy to suppress unused var warning
 
             stan::math::initialize(lambda_half, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(lambda_half,DUMMY_VAR__);
-            current_statement_begin__ = 59;
+            current_statement_begin__ = 61;
             validate_non_negative_index("lin_pred", "(k - 1)", (k - 1));
             validate_non_negative_index("lin_pred", "n", n);
             vector<vector_d> lin_pred(n, (vector_d(static_cast<Eigen::VectorXd::Index>((k - 1)))));
@@ -880,37 +888,37 @@ public:
             stan::math::fill(lin_pred,DUMMY_VAR__);
 
 
-            current_statement_begin__ = 62;
+            current_statement_begin__ = 64;
             for (int i = 1; i <= n; ++i) {
 
-                current_statement_begin__ = 63;
+                current_statement_begin__ = 65;
                 stan::math::assign(get_base1_lhs(lin_pred,i,"lin_pred",1), transpose(add(multiply(get_base1(covars,i,"covars",1),theta),get_base1(offset,i,"offset",1))));
-                current_statement_begin__ = 64;
+                current_statement_begin__ = 66;
                 stan::math::assign(get_base1_lhs(probs,i,"probs",1), softmax(append_row(get_base1(lin_pred_rand,i,"lin_pred_rand",1),0)));
             }
-            current_statement_begin__ = 76;
+            current_statement_begin__ = 78;
             stan::math::assign(invsigma0, multiply_lower_tri_self_transpose(L0));
-            current_statement_begin__ = 77;
-            stan::math::assign(invsigma1, multiply_lower_tri_self_transpose(L1));
             current_statement_begin__ = 79;
+            stan::math::assign(invsigma1, multiply_lower_tri_self_transpose(L1));
+            current_statement_begin__ = 81;
             stan::math::assign(invlambda, (1 / lambda));
-            current_statement_begin__ = 80;
+            current_statement_begin__ = 82;
             stan::math::assign(lambda_half, (lambda / 2));
 
             // validate transformed parameters
-            current_statement_begin__ = 54;
-            stan::math::check_cov_matrix(function__,"invsigma0",invsigma0);
-            current_statement_begin__ = 55;
-            stan::math::check_cov_matrix(function__,"invsigma1",invsigma1);
             current_statement_begin__ = 56;
+            stan::math::check_cov_matrix(function__,"invsigma0",invsigma0);
+            current_statement_begin__ = 57;
+            stan::math::check_cov_matrix(function__,"invsigma1",invsigma1);
+            current_statement_begin__ = 58;
             for (int k0__ = 0; k0__ < n; ++k0__) {
                 stan::math::check_simplex(function__,"probs[k0__]",probs[k0__]);
             }
-            current_statement_begin__ = 57;
-            check_greater_or_equal(function__,"invlambda",invlambda,0);
-            current_statement_begin__ = 58;
-            check_greater_or_equal(function__,"lambda_half",lambda_half,0);
             current_statement_begin__ = 59;
+            check_greater_or_equal(function__,"invlambda",invlambda,0);
+            current_statement_begin__ = 60;
+            check_greater_or_equal(function__,"lambda_half",lambda_half,0);
+            current_statement_begin__ = 61;
 
             // write transformed parameters
             for (int k_1__ = 0; k_1__ < (k - 1); ++k_1__) {
@@ -938,7 +946,7 @@ public:
 
             if (!include_gqs__) return;
             // declare and define generated quantities
-            current_statement_begin__ = 123;
+            current_statement_begin__ = 125;
             validate_non_negative_index("beta", "p", p);
             validate_non_negative_index("beta", "(k - 1)", (k - 1));
             matrix_d beta(static_cast<Eigen::VectorXd::Index>(p),static_cast<Eigen::VectorXd::Index>((k - 1)));
@@ -946,7 +954,7 @@ public:
 
             stan::math::initialize(beta, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(beta,DUMMY_VAR__);
-            current_statement_begin__ = 124;
+            current_statement_begin__ = 126;
             validate_non_negative_index("invsigma_diff", "(k - 1)", (k - 1));
             validate_non_negative_index("invsigma_diff", "(k - 1)", (k - 1));
             matrix_d invsigma_diff(static_cast<Eigen::VectorXd::Index>((k - 1)),static_cast<Eigen::VectorXd::Index>((k - 1)));
@@ -954,13 +962,13 @@ public:
 
             stan::math::initialize(invsigma_diff, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(invsigma_diff,DUMMY_VAR__);
-            current_statement_begin__ = 125;
+            current_statement_begin__ = 127;
             double frob(0.0);
             (void) frob;  // dummy to suppress unused var warning
 
             stan::math::initialize(frob, std::numeric_limits<double>::quiet_NaN());
             stan::math::fill(frob,DUMMY_VAR__);
-            current_statement_begin__ = 126;
+            current_statement_begin__ = 128;
             double natcon(0.0);
             (void) natcon;  // dummy to suppress unused var warning
 
@@ -968,20 +976,20 @@ public:
             stan::math::fill(natcon,DUMMY_VAR__);
 
 
-            current_statement_begin__ = 128;
-            stan::math::assign(beta, multiply(R_ast_inverse,theta));
-            current_statement_begin__ = 129;
-            stan::math::assign(invsigma_diff, subtract(invsigma1,invsigma0));
             current_statement_begin__ = 130;
-            stan::math::assign(frob, (frobenius_lower(invsigma1, pstream__) - frobenius_lower(invsigma0, pstream__)));
+            stan::math::assign(beta, multiply(R_ast_inverse,theta));
             current_statement_begin__ = 131;
+            stan::math::assign(invsigma_diff, subtract(invsigma1,invsigma0));
+            current_statement_begin__ = 132;
+            stan::math::assign(frob, (frobenius_lower(invsigma1, pstream__) - frobenius_lower(invsigma0, pstream__)));
+            current_statement_begin__ = 133;
             stan::math::assign(natcon, (nat_con(invsigma1, pstream__) - nat_con(invsigma0, pstream__)));
 
             // validate generated quantities
-            current_statement_begin__ = 123;
-            current_statement_begin__ = 124;
             current_statement_begin__ = 125;
             current_statement_begin__ = 126;
+            current_statement_begin__ = 127;
+            current_statement_begin__ = 128;
 
             // write generated quantities
             for (int k_1__ = 0; k_1__ < (k - 1); ++k_1__) {

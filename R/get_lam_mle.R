@@ -17,7 +17,7 @@ get_lam_mle <- function(counts, covar, status) {
 
   lt0 <- sum(abs(prec0[lower.tri(prec0)]))
   lt1 <- sum(abs(prec1[lower.tri(prec1)]))
-  lam_mle <- n.spec*(2*n.spec-1)/(2*(lt0+lt1)+sum(diag(prec0))+sum(diag(prec1)))
+  lam_mle <- n.spec^2/((lt0+lt1)+sum(diag(prec0))+sum(diag(prec1))/2)
 
   return(lam_mle)
 }
