@@ -9,7 +9,7 @@ The first step to installing **mdine** is to install [rstan](http://mc-stan.org/
   * Make sure you have a C++ toolchain and configuration installed as described in the instructions.
 
 Once **rstan** has been successfully installed, run the following code to install **mdine**:
-* Run the following code
+* Run the following code in R:
 ```r
 if (!require(devtools)) {
   install.packages("devtools")
@@ -25,7 +25,7 @@ install_github("kevinmcgregor/mdine", dependencies=TRUE)
   * Make sure to install **rtools** as described in the instructions.
 
 Once **rstan** has been successfully installed, run the following code to install **mdine**:
-* Run the following code
+* Run the following code in R:
 ```r
 if (!require(devtools)) {
   install.packages("devtools")
