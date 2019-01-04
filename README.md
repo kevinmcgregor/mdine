@@ -5,7 +5,7 @@
 The first step to installing **mdine** is to install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  The steps on how to do this are different based on your OS:
 
 ### Installing **mdine** for Mac/Linux
-* Install **rstan** by following the [Mac/Linux instructions](https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Mac-or-Linux)
+* Install **rstan** by going to the [installation page](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started) and following the Mac/Linux instructions.
   * Make sure you have a C++ toolchain and configuration installed as described in the instructions.
 
 Once **rstan** has been successfully installed, run the following code to install **mdine**:
@@ -21,7 +21,7 @@ install_github("kevinmcgregor/mdine", dependencies=TRUE)
 
 
 ### Installing **mdine** Windows
-* Install **rstan** by following the [Windows instructions](https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Windows)
+* Install **rstan** by going to the [installation page](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started) and following the Windows instructions.
   * Make sure to install **rtools** as described in the instructions.
 
 Once **rstan** has been successfully installed, run the following code to install **mdine**:
