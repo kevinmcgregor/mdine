@@ -3,10 +3,9 @@
 \docType{package}
 \name{mdine-package}
 \alias{mdine-package}
-\alias{mdine}
 \title{The 'mdine' package.}
 \description{
-A DESCRIPTION OF THE PACKAGE
+Estimates precision matrix networks for two groups (as well as their difference) in microbiome sequencing data.
 }
 \references{
 Stan Development Team (2018). RStan: the R interface to Stan. R package version 2.17.3. http://mc-stan.org

@@ -1,10 +1,9 @@
 #' The 'mdine' package.
 #' 
-#' @description A DESCRIPTION OF THE PACKAGE
+#' @description Estimates precision matrix networks for two groups (as well as their difference) in microbiome sequencing data.
 #' 
 #' @docType package
 #' @name mdine-package
-#' @aliases mdine
 #' @useDynLib mdine, .registration = TRUE
 #' @import methods
 #' @import Rcpp
