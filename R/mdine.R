@@ -1,7 +1,7 @@
 #' Microbiome differential network estimation
 #'
 #' @export
-#'
+#' @aliases mdine
 #' @param ... Other arguments passed to `rstan::sampling`
 #' @param Y The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
 #' the reference category, and is not included in the estimated network.
