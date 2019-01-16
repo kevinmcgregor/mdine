@@ -21,6 +21,7 @@ for (i in 1:n) {
 
 library(mdine)
 
-md_test = mdine(Y = counts, X = x, Z = x[,2], mc.cores = 4, iter = 500)
+md_test1 = mdine(Y = counts, X = x, Z = x[,2], mc.cores = 1, iter = 100)
+md_test2 = mdine(Y = counts, X = x, Z = x[,2], lambda=0.1, mc.cores = 1, iter = 100)
 
 

@@ -38,8 +38,7 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
     s.data <- list(counts=Y, covars=X, status=Z, n=n, k=k, p=p, lam_mle=lam_mle,
                     offset=offset)
   } else {
-    s.data <- list(counts=Y, covars=X, status=Z, n=n, k=k, p=p, lam_mle=lam_mle,
-                   offset=offset)
+    s.data <- list(counts=Y, covars=X, status=Z, n=n, k=k, p=p, lambda=lambda, offset=offset)
   }
 
   fit <- mn_model(s.data, iter, chains, mc.cores, !is.null(lambda), ...)
@@ -51,6 +50,8 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
 
   if (!is.null(lambda)) {
     ret$lambda.fixed <- lambda
+  } else{
+    ret$lam_mle <- lam_mle
   }
 
   return(ret)
