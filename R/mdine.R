@@ -48,10 +48,10 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
 
   ret <- list(stan.fit=fit, post_mean=post_mean, ci=ci)
 
-  if (!is.null(lambda)) {
-    ret$lambda.fixed <- lambda
-  } else{
+  if (is.null(lambda)) {
     ret$lam_mle <- lam_mle
+  } else {
+    ret$lambda.fixed <- lambda
   }
 
   return(ret)
