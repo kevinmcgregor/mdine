@@ -21,7 +21,7 @@ data {
   int<lower=0> k;
   int<lower=0> p;
   int<lower=0> counts[n,k];
-  real<lower=0> lam_mle;
+  real<lower=0> lambda;
   vector[n] status;
   vector[n] offset;
   matrix[n,p] covars;
@@ -31,15 +31,16 @@ transformed data {
   matrix[n,p] Q_ast;
   matrix[p,p] R_ast;
   matrix[p,p] R_ast_inverse;
-  real<lower=0> inv_lam_mle;
+  real<lower=0> inv_lambda;
+  real<lower=0> lambda_half;
   n_real = n;
   Q_ast = qr_Q(covars)[, 1:p] * sqrt(n_real - 1);
   R_ast = qr_R(covars)[1:p, ] / sqrt(n_real - 1);
   R_ast_inverse = inverse(R_ast);
-  inv_lam_mle = 1/lam_mle;
+  inv_lambda = 1/lambda;
+  lambda_half = lambda/2;
 }
 parameters {
-  real<lower=0> lambda;
   matrix[p,k-1] theta;
   vector[k-1] lin_pred_rand[n];
   cholesky_factor_cov[k-1] L0;
@@ -53,8 +54,6 @@ transformed parameters {
   cov_matrix[k-1] invsigma0;
   cov_matrix[k-1] invsigma1;
   simplex[k] probs[n];
-  real<lower=0> invlambda;
-  real<lower=0> lambda_half;
   vector[k-1] lin_pred[n];
   //cholesky_factor_cov[k-1] L0_inv;
   //cholesky_factor_cov[k-1] L1_inv;
@@ -74,9 +73,6 @@ transformed parameters {
   //invsigma1 = inverse(multiply_lower_tri_self_transpose(L1));
   invsigma0 = multiply_lower_tri_self_transpose(L0);
   invsigma1 = multiply_lower_tri_self_transpose(L1);
-
-  invlambda = 1/lambda;
-  lambda_half = lambda/2;
 }
 model {
   //Likelihood
@@ -103,8 +99,8 @@ model {
         invsigma0[j1,j2] ~ exponential(lambda_half);
         invsigma1[j1,j2] ~ exponential(lambda_half);
       } else {
-        invsigma0[j1,j2] ~ double_exponential(0,invlambda);
-        invsigma1[j1,j2] ~ double_exponential(0,invlambda);
+        invsigma0[j1,j2] ~ double_exponential(0,inv_lambda);
+        invsigma1[j1,j2] ~ double_exponential(0,inv_lambda);
       }
     }
   }
@@ -114,9 +110,6 @@ model {
       theta[j1,j2] ~ normal(0,10000);
     }
   }
-
-  //Prior for lambda
-  lambda ~ exponential(inv_lam_mle);
 }
 generated quantities {
   matrix[p,k-1] beta;
