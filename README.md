@@ -1,4 +1,4 @@
-![](https://travis-ci.com/kevinmcgregor/mdine.svg?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/kevinmcgregor/mdine.svg?branch=master)](https://travis-ci.org/kevinmcgregor/mdine)
 
 # mdine
 (**Note: This package is currently in development**) **M**icrobiome **Di**fferential **N**etwork **E**stimation (**mdine**) allows the estimation of OTU co-occurrence networks within two separate groups, where the networks are defined through precision matrices.  The difference between the two precision matrices is also estimated, along with corresponding interval estimates.
