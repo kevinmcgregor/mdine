@@ -2,9 +2,9 @@ Package: mdine
 Version: 0.0.0.9003
 Title: Microbiome differential network estimation 
 Description: Estimates precision matrix networks for two groups (as well as their difference) in microbiome 16S sequencing data.
-Authors@R: c(person("Kevin", "McGregor", email="kevin.mcgregor@mail.mcgill.ca", c("aut", "cre")),
-	   person("Aurelie", "Labbe", email="aurelie.labbe@hec.ca", c("aut")),
-	   person("Celia", "Greenwood", email="celia.greenwood@mcgill.ca", c("aut")))
+Authors@R: c(person("Kevin", "McGregor", email="kevin.mcgregor@mail.mcgill.ca", role=c("aut", "cre")),
+	   person("Aurelie", "Labbe", email="aurelie.labbe@hec.ca", role="aut"),
+	   person("Celia", "Greenwood", email="celia.greenwood@mcgill.ca", role="aut"))
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
