@@ -4,9 +4,8 @@
 \alias{mdine}
 \title{Microbiome differential network estimation}
 \usage{
-mdine(Y, X, Z = NULL, lambda = NULL, offset = NULL, mc.cores = 1,
-  iter = 1000, chains = 4, quant = c(0.025, 0.975), method = c("MCMC",
-  "MAP"), ...)
+mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = 1, iter = 1000,
+  chains = 4, quant = c(0.025, 0.975), ...)
 }
 \arguments{
 \item{Y}{The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
@@ -14,10 +13,9 @@ the reference category, and is not included in the estimated network.}
 
 \item{X}{The model matrix (including an intercept column)}
 
-\item{Z}{Binary variable over which the network is assumed to vary.  If NULL then a single network
-is assumed.}
+\item{Z}{Binary variable over which the network is assumed to vary.}
 
-\item{lambda}{Network penalization parameter}
+\item{lambda}{Network penalization parameter.  If NULL, then lambda is estimated}
 
 \item{offset}{A vector containing an offset term for each subject}
 
@@ -28,8 +26,6 @@ is assumed.}
 \item{chains}{The number of MCMC chains.}
 
 \item{quant}{Lower and upper quantiles of the posterior distribution to create credible intervals.}
-
-\item{method}{Whether to solve using MCMC sampling, or through maximum a posteriori estimation (MAP)}
 
 \item{...}{Other arguments passed to `rstan::sampling`}
 }
