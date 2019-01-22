@@ -7,9 +7,9 @@
 #'
 #' @usage data(crohns)
 #'
-#' @format An object of class \code{"cross"}; see \code{\link[qtl]{read.cross}}.
+#' @format Contains a dataframe called "covars" which contains the covariate data, as well as a matrix called "otu.counts" which contains the family-level counts of each subject.
 #'
-#' @keywords datasets
+#' @keywords datasets crohn's microbiome
 #'
 #' @references Gevers et al. (2014) Cell Host & Microbe 15.3 (2014): 382-392.
 #' (\href{https://www.ncbi.nlm.nih.gov/pubmed/24629344}{PubMed})
