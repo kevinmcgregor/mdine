@@ -7,7 +7,7 @@
 #'
 #' @usage data(crohns)
 #'
-#' @format Contains a dataframe called "covars" which contains the covariate data, as well as a matrix called "otu.counts" which contains the family-level counts of each subject.
+#' @format List with two objects: \code{covars} is a dataframe with 100 rows and 4 columns containing the covariate data; \code{otu.counts} is a matrix with 100 rows and 6 columns which contains the family-level counts of each subject.  The last column of \code{otu.counts} is a reference category containing the sum of all families not included in this dataset.
 #'
 #' @keywords datasets crohn's microbiome
 #'
@@ -17,6 +17,6 @@
 #' @source \href{https://qiita.ucsd.edu/study/description/1939}{Qiita database}
 #'
 #' @examples
-#' data(grav)
+#' data(crohns)
 #' 
 "crohns"

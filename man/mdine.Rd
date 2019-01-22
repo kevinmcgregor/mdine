@@ -4,8 +4,8 @@
 \alias{mdine}
 \title{Microbiome differential network estimation}
 \usage{
-mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = 1, iter = 1000,
-  chains = 4, quant = c(0.025, 0.975), ...)
+mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = 1,
+  iter = 1000, chains = 4, quant = c(0.025, 0.975), ...)
 }
 \arguments{
 \item{Y}{The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
