@@ -27,12 +27,10 @@ before_install:
   - echo "CXX14 = g++-7 -fPIC -flto=2" >> ~/.R/Makevars
   - echo "CXX14FLAGS = -mtune=native -march=native -Wno-unused-variable -Wno-unused-function -Wno-unused-local-typedefs -Wno-ignored-attributes -Wno-deprecated-declarations -Wno-attributes -O3" >> ~/.R/Makevars
 
-r_check_args: --as-cran
-
 script: 
   - |
     travis_wait 42 R CMD build .
-    travis_wait 59 R CMD check mdine*tar.gz
+    travis_wait 59 R CMD check --as-cran mdine*tar.gz
 
 after_script:
   - tar -ztvf mdine_*.tar.gz
