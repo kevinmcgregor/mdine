@@ -2,7 +2,7 @@
 #' Get adjacency matrix for estimated networks based on credible intervals
 #'
 #' @param obj An object of 'mdine' class
-#' @param weighted Logical: should the adjacency matrices be weighted?
+#' @param weighted Logical: should the adjacency matrices be weighted according to the corresponding partial correlation matrix?
 #'
 #' @return A list containing adjacency matrices for the two estimated precision matrices
 #' @export

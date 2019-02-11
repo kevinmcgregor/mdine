@@ -55,7 +55,7 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
     ret$lambda.fixed <- lambda
   }
 
-  class(ret) <- append(class(ret), "mdine")
+  class(ret) <- "mdine"
   return(ret)
 }
 
