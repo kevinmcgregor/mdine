@@ -14,7 +14,7 @@
 #' @param chains The number of MCMC chains.
 #' @param quant Lower and upper quantiles of the posterior distribution to create credible intervals.
 #'
-#' @return A list containing posterior means for the model parameters, credible intervals,
+#' @return A an object of class "mdine" containing posterior means for the model parameters, credible intervals,
 #' and the stanfit object.
 #'
 #' @examples ls()
@@ -26,6 +26,7 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
   if (!is.vector(Z) | !is.numeric(Z) | any(!Z%in%c(0,1))) stop("Z must be a binary vector")
   if (NROW(Y)!=NROW(X) | length(Z)!=NROW(Y)) stop("Dimension mismatch in one or more of (Y,X,Z)")
   if (!is.null(lambda)) {if (lambda<=0 | !is.numeric(lambda)) stop("lambda must be positive numeric")}
+  if (!is.numeric(quant) | length(quant)!=2) stop("quant must be a vector of length 2")
 
   n <- NROW(Y)
   k <- NCOL(Y)
@@ -54,6 +55,7 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
     ret$lambda.fixed <- lambda
   }
 
+  class(ret) <- append(class(ret), "mdine")
   return(ret)
 }
 
