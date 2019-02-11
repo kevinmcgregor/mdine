@@ -30,7 +30,7 @@ the reference category, and is not included in the estimated network.}
 \item{...}{Other arguments passed to `rstan::sampling`}
 }
 \value{
-A list containing posterior means for the model parameters, credible intervals,
+A an object of class "mdine" containing posterior means for the model parameters, credible intervals,
 and the stanfit object.
 }
 \description{

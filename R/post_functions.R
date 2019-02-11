@@ -13,6 +13,12 @@ ci2adj <- function(obj, weighted=FALSE) {
 
   adj0 <- (obj$ci$invsigma0[[1]]>0) | (obj$ci$invsigma0[[2]]<0)
   adj1 <- (obj$ci$invsigma1[[1]]>0) | (obj$ci$invsigma1[[2]]<0)
+
+  if (weighted) {
+    adj0 <- -cov2cor(obj$post_mean$invsigma0)*adj0
+    adj1 <- -cov2cor(obj$post_mean$invsigma1)*adj1
+  }
+
   diag(adj0) <- 0
   diag(adj1) <- 0
 
