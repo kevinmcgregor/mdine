@@ -68,7 +68,7 @@ plot_networks <- function(obj) {
 #' @return An object of class \code{igraph} corresponding to the provided adjacency matrix
 #' @export
 #'
-#' @importFrom igraph categorical_pal graph.adjacency
+#' @importFrom igraph categorical_pal graph.adjacency E V
 #'
 #' @examples ls()
 adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
