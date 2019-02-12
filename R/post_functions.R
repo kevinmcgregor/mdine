@@ -82,11 +82,11 @@ adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
 
   graph = graph.adjacency(w.adj, mode="undirected", weighted=TRUE, diag = FALSE)
   if (is.null(e.col)) {
-    E(graph)$color[E(graph)$weight>0] <- "forestgreen"
-    E(graph)$color[E(graph)$weight<=0] <- "orangered"
+    igraph::E(graph)$color[igraph::E(graph)$weight>0] <- "forestgreen"
+    igraph::E(graph)$color[igraph::E(graph)$weight<=0] <- "orangered"
   }
 
-  V(graph)$color <- palette
+  igraph::V(graph)$color <- palette
 
   return(graph)
 }
