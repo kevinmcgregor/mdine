@@ -20,5 +20,5 @@ An object of class \code{igraph} corresponding to the provided adjacency matrix
 Create an \code{igraph} object from weighted adjacency matrix
 }
 \examples{
-ls()
+ ls()
 }

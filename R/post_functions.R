@@ -70,7 +70,7 @@ plot_networks <- function(obj) {
 #'
 #' @importFrom igraph categorical_pal graph.adjacency E V
 #'
-#' @examples ls()
+#' @examples  ls()
 adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
   J <- NCOL(w.adj)
 
