@@ -7,7 +7,7 @@
 ci2adj(obj, weighted = FALSE)
 }
 \arguments{
-\item{obj}{An object of 'mdine' class}
+\item{obj}{An object of class \code{mdine}}
 
 \item{weighted}{Logical: should the adjacency matrices be weighted according to the corresponding partial correlation matrix?}
 }

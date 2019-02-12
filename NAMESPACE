@@ -2,6 +2,7 @@
 
 export(ci2adj)
 export(mdine)
+export(sig_diff_prec)
 import(Rcpp)
 import(methods)
 import(rstantools)

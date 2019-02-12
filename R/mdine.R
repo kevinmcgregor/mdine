@@ -27,6 +27,9 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
   if (NROW(Y)!=NROW(X) | length(Z)!=NROW(Y)) stop("Dimension mismatch in one or more of (Y,X,Z)")
   if (!is.null(lambda)) {if (lambda<=0 | !is.numeric(lambda)) stop("lambda must be positive numeric")}
   if (!is.numeric(quant) | length(quant)!=2) stop("quant must be a vector of length 2")
+  if (any(quant<=0 | quant>=1)) stop("quant entries must be between 0 and 1")
+
+  if (quant[1]>=quant[2]) quant <- quant[2:1]
 
   n <- NROW(Y)
   k <- NCOL(Y)

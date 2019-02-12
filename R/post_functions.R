@@ -1,7 +1,7 @@
 
 #' Get adjacency matrix for estimated networks based on credible intervals
 #'
-#' @param obj An object of 'mdine' class
+#' @param obj An object of class \code{mdine}
 #' @param weighted Logical: should the adjacency matrices be weighted according to the corresponding partial correlation matrix?
 #'
 #' @return A list containing adjacency matrices for the two estimated precision matrices
@@ -24,4 +24,25 @@ ci2adj <- function(obj, weighted=FALSE) {
 
   return(list(adj0=adj0, adj1=adj1))
 }
+
+
+#' Get which elements of the precision matrices differ significantly
+#'
+#' @param obj An object of class \code{mdine}
+#'
+#' @return A matrix with a 1 if that element of the precision matrix differs significantly with respect to the binary covariate
+#' @export
+#'
+#' @examples ls()
+sig_diff_prec <- function(obj) {
+  if (class(obj) != "mdine") stop("obj must be of class \"mdine\"")
+
+  is.sig <- (obj$ci$invsigma_diff[[1]]>0) | (obj$ci$invsigma_diff[[2]]<0)
+
+  return(is.sig)
+}
+
+
+
+
 
