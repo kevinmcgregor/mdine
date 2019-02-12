@@ -74,11 +74,7 @@ plot_networks <- function(obj) {
 adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
   J <- NCOL(w.adj)
 
-  if (is.null(col)) {
-    palette <- igraph::categorical_pal(J)
-  } else {
-    palette <- col
-  }
+  pal <- igraph::categorical_pal(J)
 
   graph = graph.adjacency(w.adj, mode="undirected", weighted=TRUE, diag = FALSE)
   if (is.null(e.col)) {
@@ -86,7 +82,7 @@ adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
     igraph::E(graph)$color[igraph::E(graph)$weight<=0] <- "orangered"
   }
 
-  igraph::V(graph)$color <- palette
+  igraph::V(graph)$color <- pal
 
   return(graph)
 }
