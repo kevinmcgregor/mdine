@@ -7,7 +7,7 @@
 #' @return A list containing adjacency matrices for the two estimated precision matrices
 #' @export
 #'
-#' importFrom stats cov2cor
+#' @importFrom stats cov2cor
 #'
 #' @examples ls()
 ci2adj <- function(obj, weighted=FALSE) {
@@ -62,7 +62,8 @@ sig_diff_prec <- function(obj) {
 #'
 #' @export
 #'
-#' @importFrom igraph plot.igraph E
+#' @importFrom igraph plot.igraph E layout_in_circle
+#' @importFrom graphics layout legend par plot.new
 #'
 #' @examples ls()
 plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, lay1=layout_in_circle,
