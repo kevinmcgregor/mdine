@@ -7,6 +7,8 @@
 #' @return A list containing adjacency matrices for the two estimated precision matrices
 #' @export
 #'
+#' importFrom stats cov2cor
+#'
 #' @examples ls()
 ci2adj <- function(obj, weighted=FALSE) {
   if (class(obj) != "mdine") stop("obj must be of class \"mdine\"")
@@ -15,8 +17,8 @@ ci2adj <- function(obj, weighted=FALSE) {
   adj1 <- (obj$ci$invsigma1[[1]]>0) | (obj$ci$invsigma1[[2]]<0)
 
   if (weighted) {
-    adj0 <- -cov2cor(obj$post_mean$invsigma0)*adj0
-    adj1 <- -cov2cor(obj$post_mean$invsigma1)*adj1
+    adj0 <- -stats::cov2cor(obj$post_mean$invsigma0)*adj0
+    adj1 <- -stats::cov2cor(obj$post_mean$invsigma1)*adj1
   }
 
   diag(adj0) <- 0
@@ -60,7 +62,7 @@ sig_diff_prec <- function(obj) {
 #'
 #' @export
 #'
-#' @import igraph
+#' @importFrom igraph plot.igraph E
 #'
 #' @examples ls()
 plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, lay1=layout_in_circle,
@@ -85,26 +87,26 @@ plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, la
     l1 = lay1
   }
 
-  if (is.null(E(g0)$weight)) {
+  if (is.null(igraph::E(g0)$weight)) {
     lwd0 <- 0
   } else {
-    lwd0 <- abs(E(g0)$weight)*scale_line_width
+    lwd0 <- abs(igraph::E(g0)$weight)*scale_line_width
   }
 
-  if (is.null(E(g1)$weight)) {
+  if (is.null(igraph::E(g1)$weight)) {
     lwd1 <- 0
   } else {
-    lwd1 <- abs(E(g1)$weight)*scale_line_width
+    lwd1 <- abs(igraph::E(g1)$weight)*scale_line_width
   }
 
   layout(matrix(c(1,2,3,3), ncol=2, byrow=TRUE), heights=c(5, 2), widths=c(6,6,1.5))
   par(mai=rep(0.2, 4))
-  plot.igraph(g0, layout=l1,
+  igraph::plot.igraph(g0, layout=l1,
        edge.width=lwd0, main=lab0,
        vertex.size=vertex.size, vertex.shape="circle",
        vertex.label=vertex.labs, vertex.label.color="black", vertex.label.cex=vertex.label.cex)
   par(mai=rep(0.2, 4))
-  plot.igraph(g1, layout=l1,
+  igraph::plot.igraph(g1, layout=l1,
        edge.width=lwd1, main=lab1,
        vertex.size=vertex.size, vertex.shape="circle",
        vertex.label=vertex.labs, vertex.label.color="black", vertex.label.cex=vertex.label.cex)
