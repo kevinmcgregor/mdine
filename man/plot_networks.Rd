@@ -2,18 +2,38 @@
 % Please edit documentation in R/post_functions.R
 \name{plot_networks}
 \alias{plot_networks}
-\title{Plot a network for each group}
+\title{Plot a network (estimated from \code{mdine}) for each group}
 \usage{
-plot_networks(obj)
+plot_networks(obj, v.col = NULL, e.col = NULL,
+  lay0 = layout_in_circle, lay1 = layout_in_circle, lab0 = "Group 0",
+  lab1 = "Group 1", scale_line_width = 30, vertex.size = 50,
+  vertex.labs = NULL, vertex.label.cex = NULL)
 }
 \arguments{
 \item{obj}{An object of class \code{mdine}}
-}
-\value{
-No return value
+
+\item{v.col}{Vertex colours. If null, a colour blind-friendly pallete is used}
+
+\item{e.col}{Edge colour.}
+
+\item{lay0}{\code{igraph} layout for group 0}
+
+\item{lay1}{\code{igraph} layout for group 1}
+
+\item{lab0}{Main label for group 0 network}
+
+\item{lab1}{Main label for group 1 network}
+
+\item{scale_line_width}{Scaling factor for with of network edges}
+
+\item{vertex.size}{Scaling factor for vertex size}
+
+\item{vertex.labs}{Character vector containing vertex labels}
+
+\item{vertex.label.cex}{Scaling factor for vertex labels}
 }
 \description{
-Plot a network for each group
+Plot a network (estimated from \code{mdine}) for each group
 }
 \examples{
 ls()

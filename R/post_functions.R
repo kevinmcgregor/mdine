@@ -44,18 +44,74 @@ sig_diff_prec <- function(obj) {
 }
 
 
-#' Plot a network for each group
+#' Plot a network (estimated from \code{mdine}) for each group
 #'
 #' @param obj An object of class \code{mdine}
+#' @param v.col Vertex colours. If null, a colour blind-friendly pallete is used
+#' @param e.col Edge colour.
+#' @param lay0 \code{igraph} layout for group 0
+#' @param lay1 \code{igraph} layout for group 1
+#' @param lab0 Main label for group 0 network
+#' @param lab1 Main label for group 1 network
+#' @param scale_line_width Scaling factor for with of network edges
+#' @param vertex.size Scaling factor for vertex size
+#' @param vertex.labs Character vector containing vertex labels
+#' @param vertex.label.cex Scaling factor for vertex labels
 #'
-#' @return No return value
 #' @export
 #'
+#' @import igraph
 #'
 #' @examples ls()
-plot_networks <- function(obj) {
+plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, lay1=layout_in_circle,
+                          lab0="Group 0", lab1="Group 1", scale_line_width=30, vertex.size=50,
+                          vertex.labs=NULL, vertex.label.cex=NULL) {
   if (class(obj) != "mdine") stop("obj must be of class \"mdine\"")
-  return(1)
+
+  w.adj <- ci2adj(obj, weighted = TRUE)
+
+  g0 <- adj2ig(w.adj$adj0, v.col, e.col)
+  g1 <- adj2ig(w.adj$adj1, v.col, e.col)
+
+  if (is.function(lay0)) {
+    l0 = lay0(g0)
+  } else {
+    l0 = lay0
+  }
+
+  if (is.function(lay1)) {
+    l1 = lay1(g1)
+  } else {
+    l1 = lay1
+  }
+
+  if (is.null(E(g0)$weight)) {
+    lwd0 <- 0
+  } else {
+    lwd0 <- abs(E(g0)$weight)*scale_line_width
+  }
+
+  if (is.null(E(g1)$weight)) {
+    lwd1 <- 0
+  } else {
+    lwd1 <- abs(E(g1)$weight)*scale_line_width
+  }
+
+  layout(matrix(c(1,2,3,3), ncol=2, byrow=TRUE), heights=c(5, 2), widths=c(6,6,1.5))
+  par(mai=rep(0.2, 4))
+  plot.igraph(g0, layout=l1,
+       edge.width=lwd0, main=lab0,
+       vertex.size=vertex.size, vertex.shape="circle",
+       vertex.label=vertex.labs, vertex.label.color="black", vertex.label.cex=vertex.label.cex)
+  par(mai=rep(0.2, 4))
+  plot.igraph(g1, layout=l1,
+       edge.width=lwd1, main=lab1,
+       vertex.size=vertex.size, vertex.shape="circle",
+       vertex.label=vertex.labs, vertex.label.color="black", vertex.label.cex=vertex.label.cex)
+  plot.new()
+  legend("center", legend=c("Positive assoc.", "Negative assoc."),
+         lty=c(1,1), col=c("forestgreen","orangered"), ncol=2, cex=1.3, lwd = 6, box.col="white")
+
 }
 
 
