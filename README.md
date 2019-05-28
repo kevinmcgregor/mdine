@@ -1,7 +1,7 @@
 [![Travis-CI Build Status](https://travis-ci.com/kevinmcgregor/mdine.svg?branch=master)](https://travis-ci.com/kevinmcgregor/mdine)
 
 # mdine
-(**Note: This package is currently in development**) **M**icrobiome **Di**fferential **N**etwork **E**stimation (**mdine**) allows the estimation of OTU co-occurrence networks within two separate groups, where the networks are defined through precision matrices.  The difference between the two precision matrices is also estimated, along with corresponding interval estimates.
+(**Note: This package is currently in development**) **M**icrobiome **Di**fferential **N**etwork **E**stimation (**mdine**) allows the estimation of OTU co-occurrence networks within two separate groups, where the networks are defined through precision matrices.  The difference between the two precision matrices is also estimated, along with corresponding interval estimates.  This work was developed in the [Greenwood Lab](https://www.mcgill.ca/statisticalgenetics/) at McGill University.
 
 ## Installation
 The first step to installing **mdine** is to install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  The steps on how to do this are different based on your OS:
