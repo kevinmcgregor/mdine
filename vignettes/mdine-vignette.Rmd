@@ -3,8 +3,26 @@ title: "MDiNE Vignette"
 author: "Kevin McGregor"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: mdine-vignette.bib
+header-includes:
+  - \newcommand{\Xb}{\textbf{X}}
+  - \newcommand{\Bb}{\textbf{B}}
+  - \newcommand{\Yb}{\textbf{Y}}
+  - \newcommand{\Wb}{\textbf{W}}
+  - \newcommand{\Sigzero}{\mathbf{\Sigma}_0}
+  - \newcommand{\Sigone}{\mathbf{\Sigma}_1}
+  - \newcommand{\Sigzerohat}{\widehat{\mathbf{\Sigma}}_0}
+  - \newcommand{\Sigonehat}{\widehat{\mathbf{\Sigma}}_1}
+  - \newcommand{\Sigzerowidehat}{\widehat{\mathbf{\Sigma}}_0}
+  - \newcommand{\Sigonewidehat}{\widehat{\mathbf{\Sigma}}_1}
+  - \newcommand{\sjzero}{s^{(0)}_{jj^\prime}}
+  - \newcommand{\sjone}{s^{(1)}_{jj^\prime}}
+  - \newcommand{\lp}{\left(}
+  - \newcommand{\rp}{\right)}
+  - \newcommand{\lb}{\left[}
+  - \newcommand{\rb}{\right]}
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{MDiNE Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,47 +34,107 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+**M**icrobiome **Di**fferential **N**etwork **E**stimation (**mdine**) allows the estimation of OTU co-occurrence networks within two separate groups, where the networks are defined through precision matrices.  The difference between the two precision matrices is also estimated, along with corresponding interval estimates.  This work was developed in the [Greenwood Lab](https://www.mcgill.ca/statisticalgenetics/) at McGill University.
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
-## Vignette Info
+## Installation
+**mdine** uses the package **rstan** to sample the model parameters.  The first step to installing **mdine** is to install [rstan](http://mc-stan.org/users/interfaces/rstan) along with the appropriate compiler.  Currently, **mdine** is only available to install through github.  To install, run:
+```{r, eval=FALSE}
+if (!require(devtools)) {
+  install.packages("devtools")
+  library(devtools)
+}
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+install_github("kevinmcgregor/mdine", dependencies=TRUE)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## The model
+The goal of **mdine** is to estimate a precision matrix-based taxa co-occurrence network within two groups.  Here we describe the basic structure of the model being estimated. For more information consult @mcgregor2019mdine. Assume $\Yb$ is an $n\times (J+1)$ matrix of counts of $J+1$ taxa in $n$ samples.  $z_i \in \{0,1\}$ indicates which group individual $i$ belongs to, and this is the covariate that the co-occurrence network will vary over.  Also, $K$ additional covariates can be included in the model and are contained in the $(n\times (K+1))$ design matrix $\Xb$.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+\begin{align}
+    \label{eqn:modeldef}
+	\Yb_{i\cdot} | p_{i\cdot}, \Bb, \Wb_{i\cdot}, \Sigzero^{-1}, \Sigone^{-1}, \lambda & \sim \mbox{Multinomial}(M_i, p_{i\cdot}) \nonumber \\
+    \Wb_{i\cdot} | \Bb, \Sigzero^{-1}, \Sigone^{-1}, \lambda & \sim \mbox{Normal}\lp (\Xb_{i\cdot} \Bb)^\top, z_i\Sigone+(1-z_i)\Sigzero\rp \nonumber \\
+    {s}^{(z)}_{jj^\prime} | \lambda & \sim \mbox{Laplace}\lp 0, \lambda \rp \nonumber \\
+    {s}^{(z)}_{jj} | \lambda & \sim \mbox{Exponential}\lp \lambda/2 \rp \nonumber \\
+    \lambda & \sim \mbox{Exponential}\left(\widehat{\lambda}_{init}^{-1}\right) \nonumber \\
+    \Bb_{kj} & \sim \mbox{Normal}\lp 0, 10000 \rp,
+\end{align}
+for each $i\in\{1,\dots,N\}$, $j\in\{1,\dots,J\}$, $j^\prime \in \{1,\dots,j-1\}$, $k\in\{1,\dots,K+1\}$, and $z\in\{0,1\}$.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+The ``true'' OTU proportions are parameterized as:
+\begin{align}
+\label{eqn:prop}
+    \lb \log \lp\frac{p_{i1}}{p_{i(J+1)}}\rp, \dots, \lp\frac{p_{iJ}}{p_{i(J+1)}}\rp \rb &= \Wb_{i\cdot}
+\end{align}
 
-## More Examples
+The $(J+1)^{th}$ OTU is considered to be the reference category, and will not be included in the networks.  This could be a single OTU, or it could be the sum of two or more OTUs, e.g. the sum of all remaining OTUs not to be included in the networks.
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+The parameters in the $(K+1)\times J$ matrix $\Bb$ explain the effects of the covariates on the taxa abundances.  The co-occurrence networks for individuals with $z_i=0$ and $z_i=1$ are defined through the two precision matrices $\Sigzero^{-1}$ and $\Sigone^{-1}$, respectively.  The value $\lambda$ controls the amount of sparsity in $\Sigzero^{-1}$ and $\Sigone^{-1}$ (though in the Bayesian context, values will not be set *exactly* to zero).
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+## Using the **mdine** package
+
+### Arguments
+The required arguments of the **mdine** function are:
+
+  - Y - The OTU counts.  The last column contains the counts of the reference category.  Usually, this would be the sum of the OTU columns that are not to be included in the networks.
+  - X - The design matrix including a column of ones for the intercept
+  - Z - The binary variable you want the network to vary over.  This variable can also be included in the design matrix.
+
+Some other optional arguments are:
+
+  - lambda - The penalization parameter.  If not specified, then the value of $\lambda$ is estimated according to the above model.
+  - offset - Offset term to include in the model
+  - mc.cores - Number of cores to use in MCMC sampling
+  - iter - Number of MCMC iterations.  By default, the first half will be used as warmup.
+  - quant - Vector (length 2) specifying lower and upper quantiles for credible intervals.
+  
+### Example
+We apply **mdine** on a dataset containing samples from Chron's patients and controls (@gevers2014treatment).  The dataset included in this package contains a subset of only 100 samples from the original dataset.  The data come in the form of a list, where the first list element contains the covariates, and the second element contains the counts for 5 families, and a 6th ``reference'' category containing the sum of all remaining families.
+
+```{r}
+library(mdine)
+data(crohns)
+
+# Covariate data
+head(crohns$covars)
+# OTU table
+head(crohns$otu.counts)
 ```
 
-Also a quote using `>`:
+First we'll prepare the model matrix.  We'll only include disease status and an intercept:
+```{r}
+X <- model.matrix(~disease, data=crohns$covars)
+head(X)
+```
+
+Next, we'll run **mdine**:
+```{r, cache=TRUE}
+# Running mdine
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+```
+
+Looking at the estimated precision matrices:
+```{r}
+# Estimated precision matrix for control samples (Z=0):
+md.fit$post_mean$invsigma0
+
+# Estimated precision matrix for Crohn's samples (Z=1):
+md.fit$post_mean$invsigma1
+```
+
+```{r}
+# Weighted adjacency matrices based on each precision matrix
+ci2adj(md.fit, weighted = TRUE)
+```
+
+A function (with limited ability) is provided to plot the networks for the two groups based on which edges are ``significant'' according to the credible intervals caluclated in **mdine**.
+```{r}
+# Weighted adjacency matrices based on each precision matrix
+plot_networks(md.fit)
+```
+
+## References
+
+
+

@@ -1,3 +1,5 @@
+^Meta$
+^doc$
 ^src/stan_files/*\.o$
 ^src/stan_files/*\.hpp$
 ^src/mdine\.so$
