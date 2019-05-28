@@ -125,13 +125,23 @@ md.fit$post_mean$invsigma1
 
 ```{r}
 # Weighted adjacency matrices based on each precision matrix
-ci2adj(md.fit, weighted = TRUE)
+adj <- ci2adj(md.fit, weighted = TRUE)
+adj
 ```
 
+### Plotting resulting networks
+
 A function (with limited ability) is provided to plot the networks for the two groups based on which edges are ``significant'' according to the credible intervals caluclated in **mdine**.
-```{r}
-# Weighted adjacency matrices based on each precision matrix
+```{r, fig.height=4, fig.width=6, fig.align='center'}
+# Plotting the two networks
 plot_networks(md.fit)
+```
+
+The function *plot_networks()* is meant only as a way to quickly visualize the networks corresponding to two groups; its functionality is rather limited.  However, this package also contains a function to convert a weighted adjacency matrix to an *igraph* object for use in more sophisticated figures using *plot.igraph()*.
+```{r, fig.height=4, fig.width=4, fig.align='center'}
+# Weighted adjacency matrices based on each precision matrix
+ig0 <- adj2ig(adj$adj0)
+igraph::plot.igraph(ig0)
 ```
 
 ## References
