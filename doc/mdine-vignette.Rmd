@@ -2,7 +2,7 @@
 title: "MDiNE Vignette"
 author: "Kevin McGregor"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 bibliography: mdine-vignette.bib
 header-includes:
   - \newcommand{\Xb}{\textbf{X}}
