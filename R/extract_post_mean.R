@@ -1,8 +1,7 @@
 
 #Extract posterior means for all parameters... returns list
 extract_post_mean <- function(stan.fit, lam.null) {
-  pars <- c("beta", "invsigma0", "invsigma1", "invsigma_diff", "lin_pred_rand", "probs",
-            "frob", "natcon")
+  pars <- c("beta", "invsigma0", "invsigma1", "invsigma_diff", "lin_pred_rand", "probs")
 
   post_mean <- vector("list", length(pars))
   names(post_mean) <- pars
@@ -21,8 +20,7 @@ extract_post_mean <- function(stan.fit, lam.null) {
 
 #Extract credible intervals for all parameters... returns list
 extract_ci <- function(stan.fit,lam.null,quant) {
-  pars <- c("beta", "invsigma0", "invsigma1", "invsigma_diff", "lin_pred_rand", "probs",
-            "frob", "natcon")
+  pars <- c("beta", "invsigma0", "invsigma1", "invsigma_diff", "lin_pred_rand", "probs")
 
   ci <- vector("list", length(pars))
   names(ci) <- pars

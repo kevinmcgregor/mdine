@@ -20,5 +20,17 @@ An object of class \code{igraph} corresponding to the provided adjacency matrix
 Create an \code{igraph} object from weighted adjacency matrix
 }
 \examples{
- ls()
+
+\donttest{
+library(mdine)
+data(crohns)
+
+X <- model.matrix(~disease, data=crohns$covars)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+adj <- ci2adj(md.fit, weighted = TRUE)
+
+ig0 <- adj2ig(adj$adj0)
+igraph::plot.igraph(ig0)
+}
+
 }

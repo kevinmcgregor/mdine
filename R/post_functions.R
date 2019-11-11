@@ -9,7 +9,16 @@
 #'
 #' @importFrom stats cov2cor
 #'
-#' @examples ls()
+#' @examples
+#' \donttest{
+#' library(mdine)
+#' data(crohns)
+#'
+#' X <- model.matrix(~disease, data=crohns$covars)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' adj <- ci2adj(md.fit, weighted = TRUE)
+#' }
+#'
 ci2adj <- function(obj, weighted=FALSE) {
   if (class(obj) != "mdine") stop("obj must be of class \"mdine\"")
 
@@ -36,7 +45,16 @@ ci2adj <- function(obj, weighted=FALSE) {
 #' @export
 #'
 #'
-#' @examples ls()
+#' @examples
+#' \donttest{
+#' library(mdine)
+#' data(crohns)
+#'
+#' X <- model.matrix(~disease, data=crohns$covars)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' sig_diff_prec(md.fit)
+#' }
+#'
 sig_diff_prec <- function(obj) {
   if (class(obj) != "mdine") stop("obj must be of class \"mdine\"")
 
@@ -65,7 +83,21 @@ sig_diff_prec <- function(obj) {
 #' @importFrom igraph plot.igraph E layout_in_circle
 #' @importFrom graphics layout legend par plot.new
 #'
-#' @examples ls()
+#' @details Plots an igraph-based network for each group.  Note that this function has limited functionality and
+#' is intended only for immediate visualization of the networks.  To plot more sophisticated networks, please
+#' use the adj2ig() function along with plot.igraph().
+#'
+#' @examples
+#'
+#' \donttest{
+#' library(mdine)
+#' data(crohns)
+#'
+#' X <- model.matrix(~disease, data=crohns$covars)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' plot_networks(md.fit)
+#' }
+#'
 plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, lay1=layout_in_circle,
                           lab0="Group 0", lab1="Group 1", scale_line_width=30, vertex.size=50,
                           vertex.labs=NULL, vertex.label.cex=NULL) {
@@ -129,7 +161,20 @@ plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, la
 #'
 #' @importFrom igraph categorical_pal graph.adjacency E V
 #'
-#' @examples  ls()
+#' @examples
+#'
+#' \donttest{
+#' library(mdine)
+#' data(crohns)
+#'
+#' X <- model.matrix(~disease, data=crohns$covars)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' adj <- ci2adj(md.fit, weighted = TRUE)
+#'
+#' ig0 <- adj2ig(adj$adj0)
+#' igraph::plot.igraph(ig0)
+#' }
+#'
 adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
   J <- NCOL(w.adj)
 

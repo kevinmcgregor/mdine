@@ -4,7 +4,7 @@
 \alias{mdine}
 \title{Microbiome differential network estimation}
 \usage{
-mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = 1,
+mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = chains,
   iter = 1000, chains = 4, quant = c(0.025, 0.975), ...)
 }
 \arguments{
@@ -13,7 +13,7 @@ the reference category, and is not included in the estimated network.}
 
 \item{X}{The model matrix (including an intercept column)}
 
-\item{Z}{Binary variable over which the network is assumed to vary.}
+\item{Z}{Vector containing the binary variable over which the network is assumed to vary.}
 
 \item{lambda}{Network penalization parameter.  If NULL, then lambda is estimated}
 
@@ -25,17 +25,35 @@ the reference category, and is not included in the estimated network.}
 
 \item{chains}{The number of MCMC chains.}
 
-\item{quant}{Lower and upper quantiles of the posterior distribution to create credible intervals.}
+\item{quant}{Vector containing the lower and upper quantiles of the posterior distribution to create credible intervals.}
 
 \item{...}{Other arguments passed to `rstan::sampling`}
 }
 \value{
-A an object of class "mdine" containing posterior means for the model parameters, credible intervals,
+An object of class "mdine" containing posterior means for the model parameters, credible intervals,
 and the stanfit object.
+\item{stan.fit}{The object returned from rstan}
+\item{post_mean}{List contatining estimated posterior means for the model parameters}
+\item{ci}{List contatining credible intervals for all parameters}
+\item{lam_mle}{Initial value of lambda used as mean in the prior distriubtion for lambda}
 }
 \description{
 Microbiome differential network estimation
 }
+\details{
+MDiNE is a model based on multinomial logistic regression to estimate precision matrix-based
+networks within two groups.
+}
 \examples{
-ls()
+\donttest{
+library(mdine)
+data(crohns)
+
+X <- model.matrix(~disease, data=crohns$covars)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+}
+
+}
+\references{
+McGregor, Labbe, and Greenwood 2019: \href{https://doi.org/10.1093/bioinformatics/btz824}{DOI}
 }

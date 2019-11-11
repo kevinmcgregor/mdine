@@ -18,5 +18,13 @@ A list containing adjacency matrices for the two estimated precision matrices
 Get adjacency matrix for estimated networks based on credible intervals
 }
 \examples{
-ls()
+\donttest{
+library(mdine)
+data(crohns)
+
+X <- model.matrix(~disease, data=crohns$covars)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+adj <- ci2adj(md.fit, weighted = TRUE)
+}
+
 }

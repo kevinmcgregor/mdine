@@ -35,6 +35,20 @@ plot_networks(obj, v.col = NULL, e.col = NULL,
 \description{
 Plot a network (estimated from \code{mdine}) for each group
 }
+\details{
+Plots an igraph-based network for each group.  Note that this function has limited functionality and
+is intended only for immediate visualization of the networks.  To plot more sophisticated networks, please
+use the adj2ig() function along with plot.igraph().
+}
 \examples{
-ls()
+
+\donttest{
+library(mdine)
+data(crohns)
+
+X <- model.matrix(~disease, data=crohns$covars)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+plot_networks(md.fit)
+}
+
 }

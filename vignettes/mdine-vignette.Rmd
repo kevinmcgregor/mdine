@@ -108,10 +108,10 @@ X <- model.matrix(~disease, data=crohns$covars)
 head(X)
 ```
 
-Next, we'll run **mdine**:
+Next, we'll run **mdine**.  We'll only use one core in this vignette, but in practice you can specify the number of cores to use with the \texttt{mc.cores} argument.  The default number of cores is the number of MCMC chains being run.
 ```{r, cache=TRUE}
 # Running mdine
-md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 ```
 
 Looking at the estimated precision matrices:

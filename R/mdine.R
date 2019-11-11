@@ -6,19 +6,37 @@
 #' @param Y The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
 #' the reference category, and is not included in the estimated network.
 #' @param X The model matrix (including an intercept column)
-#' @param Z Binary variable over which the network is assumed to vary.
+#' @param Z Vector containing the binary variable over which the network is assumed to vary.
 #' @param lambda Network penalization parameter.  If NULL, then lambda is estimated
 #' @param offset A vector containing an offset term for each subject
 #' @param mc.cores The number of cores to run MCMC chains in parallel
 #' @param iter The number of MCMC iterations.  By default the first half of the iterations will be used as warmup.
 #' @param chains The number of MCMC chains.
-#' @param quant Lower and upper quantiles of the posterior distribution to create credible intervals.
+#' @param quant Vector containing the lower and upper quantiles of the posterior distribution to create credible intervals.
 #'
-#' @return A an object of class "mdine" containing posterior means for the model parameters, credible intervals,
+#' @details MDiNE is a model based on multinomial logistic regression to estimate precision matrix-based
+#' networks within two groups.
+#'
+#'
+#' @return An object of class "mdine" containing posterior means for the model parameters, credible intervals,
 #' and the stanfit object.
+#' \item{stan.fit}{The object returned from rstan}
+#' \item{post_mean}{List contatining estimated posterior means for the model parameters}
+#' \item{ci}{List contatining credible intervals for all parameters}
+#' \item{lam_mle}{Initial value of lambda used as mean in the prior distriubtion for lambda}
 #'
-#' @examples ls()
-mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=1,iter=1000,
+#' @references McGregor, Labbe, and Greenwood 2019: \href{https://doi.org/10.1093/bioinformatics/btz824}{DOI}
+#'
+#' @examples
+#' \donttest{
+#' library(mdine)
+#' data(crohns)
+#'
+#' X <- model.matrix(~disease, data=crohns$covars)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' }
+#'
+mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=chains, iter=1000,
                   chains=4, quant=c(0.025, 0.975), ...) {
 
   if (!is.matrix(Y) | any(floor(Y)!=Y) | any(Y<0)) stop("Y must be a numeric matrix containing positive counts")

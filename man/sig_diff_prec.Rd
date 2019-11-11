@@ -16,5 +16,13 @@ A matrix with a 1 if that element of the precision matrix differs significantly 
 Get which elements of the precision matrices differ significantly
 }
 \examples{
-ls()
+\donttest{
+library(mdine)
+data(crohns)
+
+X <- model.matrix(~disease, data=crohns$covars)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+sig_diff_prec(md.fit)
+}
+
 }
