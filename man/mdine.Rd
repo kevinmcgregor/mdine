@@ -32,10 +32,10 @@ the reference category, and is not included in the estimated network.}
 \value{
 An object of class "mdine" containing posterior means for the model parameters, credible intervals,
 and the stanfit object.
-\item{stan.fit}{The object returned from rstan}
+\item{stan.fit}{The object returned from rstan.  This can be used for MCMC diagnostics provided in the rstan package}
 \item{post_mean}{List contatining estimated posterior means for the model parameters}
 \item{ci}{List contatining credible intervals for all parameters}
-\item{lam_mle}{Initial value of lambda used as mean in the prior distriubtion for lambda}
+\item{lam_mle}{Initial value of lambda used as mean in the prior distribution for lambda}
 }
 \description{
 Microbiome differential network estimation

@@ -108,7 +108,7 @@ X <- model.matrix(~disease, data=crohns$covars)
 head(X)
 ```
 
-Next, we'll run **mdine**:
+Next, we'll run **mdine**.  Note that additional parameters can be passed to this function, which will be passed on to *rstan::sampling*.  This allows the user to change the parameters in the Hamiltonian Markov Chain process used by **rstan** (e.g. adaptation parameters).  For more information on the possible parameters, please refer to the **rstan** documentation.
 ```{r, cache=TRUE}
 # Running mdine
 md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
@@ -143,6 +143,9 @@ The function *plot_networks()* is meant only as a way to quickly visualize the n
 ig0 <- adj2ig(adj$adj0)
 igraph::plot.igraph(ig0)
 ```
+
+## Diagnostic tools
+The object returned by the **mdine** command includes the object returned from **rstan**.  This can be used to perform model diagnostics.
 
 ## References
 
