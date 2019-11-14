@@ -83,7 +83,7 @@ sig_diff_prec <- function(obj) {
 #' @importFrom igraph plot.igraph E layout_in_circle
 #' @importFrom graphics layout legend par plot.new
 #'
-#' @details Plots an igraph-based network for each group.  Note that this function has limited functionality and
+#' @details Plots an \code{igraph}-based network for each group.  Note that this function has limited functionality and
 #' is intended only for immediate visualization of the networks.  To plot more sophisticated networks, please
 #' use the adj2ig() function along with plot.igraph().
 #'
@@ -153,8 +153,8 @@ plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, la
 #' Create an \code{igraph} object from weighted adjacency matrix
 #'
 #' @param w.adj The weighted adjacency matrix to be converted to an \code{igraph} object
-#' @param v.col The vertex colours.  Numeric vector of length equal to number of OTUs in network
-#' @param e.col The edge colour.  If NULL, then colour green/red based on positive/negative weights.
+#' @param v.col The vertex colours. Numeric vector of length equal to number of taxa in network.
+#' @param e.col The edge colours.  Numeric vector of length equal to number of taxa in network. If NULL, then colour green/red based on positive/negative weights.
 #'
 #' @return An object of class \code{igraph} corresponding to the provided adjacency matrix
 #' @export
@@ -175,7 +175,7 @@ plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, la
 #' igraph::plot.igraph(ig0)
 #' }
 #'
-adj2ig <- function(w.adj=NULL, v.col=NULL, e.col=NULL) {
+adj2ig <- function(w.adj, v.col=NULL, e.col=NULL) {
   J <- NCOL(w.adj)
 
   pal <- igraph::categorical_pal(J)

@@ -121,11 +121,11 @@ model {
 generated quantities {
   matrix[p,k-1] beta;
   matrix[k-1,k-1] invsigma_diff;
-  //real frob;
-  //real natcon;
+  real frob;
+  real natcon;
   //Transform fixed effects back to original scale
   beta = R_ast_inverse * theta;
   invsigma_diff = invsigma1 - invsigma0;
-  //frob = frobenius_lower(invsigma1)-frobenius_lower(invsigma0);
-  //natcon = nat_con(invsigma1)-nat_con(invsigma0);
+  frob = frobenius_lower(invsigma1)-frobenius_lower(invsigma0);
+  natcon = nat_con(invsigma1)-nat_con(invsigma0);
 }

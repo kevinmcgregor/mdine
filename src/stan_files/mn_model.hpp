@@ -780,8 +780,6 @@ public:
         names__.push_back("lin_pred");
         names__.push_back("beta");
         names__.push_back("invsigma_diff");
-        names__.push_back("frob");
-        names__.push_back("natcon");
     }
 
 
@@ -833,10 +831,6 @@ public:
         dims__.resize(0);
         dims__.push_back((k - 1));
         dims__.push_back((k - 1));
-        dimss__.push_back(dims__);
-        dims__.resize(0);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -1047,27 +1041,11 @@ public:
             stan::math::initialize(invsigma_diff, DUMMY_VAR__);
             stan::math::fill(invsigma_diff, DUMMY_VAR__);
 
-            current_statement_begin__ = 124;
-            double frob;
-            (void) frob;  // dummy to suppress unused var warning
-            stan::math::initialize(frob, DUMMY_VAR__);
-            stan::math::fill(frob, DUMMY_VAR__);
-
-            current_statement_begin__ = 125;
-            double natcon;
-            (void) natcon;  // dummy to suppress unused var warning
-            stan::math::initialize(natcon, DUMMY_VAR__);
-            stan::math::fill(natcon, DUMMY_VAR__);
-
             // generated quantities statements
             current_statement_begin__ = 127;
             stan::math::assign(beta, multiply(R_ast_inverse, theta));
             current_statement_begin__ = 128;
             stan::math::assign(invsigma_diff, subtract(invsigma1, invsigma0));
-            current_statement_begin__ = 129;
-            stan::math::assign(frob, (frobenius_lower(invsigma1, pstream__) - frobenius_lower(invsigma0, pstream__)));
-            current_statement_begin__ = 130;
-            stan::math::assign(natcon, (nat_con(invsigma1, pstream__) - nat_con(invsigma0, pstream__)));
 
             // validate, write generated quantities
             current_statement_begin__ = 122;
@@ -1087,12 +1065,6 @@ public:
                     vars__.push_back(invsigma_diff(j_1__, j_2__));
                 }
             }
-
-            current_statement_begin__ = 124;
-            vars__.push_back(frob);
-
-            current_statement_begin__ = 125;
-            vars__.push_back(natcon);
 
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -1234,12 +1206,6 @@ public:
                 param_names__.push_back(param_name_stream__.str());
             }
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "frob";
-        param_names__.push_back(param_name_stream__.str());
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "natcon";
-        param_names__.push_back(param_name_stream__.str());
     }
 
 
@@ -1341,12 +1307,6 @@ public:
                 param_names__.push_back(param_name_stream__.str());
             }
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "frob";
-        param_names__.push_back(param_name_stream__.str());
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "natcon";
-        param_names__.push_back(param_name_stream__.str());
     }
 
 }; // model

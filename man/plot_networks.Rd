@@ -36,7 +36,7 @@ plot_networks(obj, v.col = NULL, e.col = NULL,
 Plot a network (estimated from \code{mdine}) for each group
 }
 \details{
-Plots an igraph-based network for each group.  Note that this function has limited functionality and
+Plots an \code{igraph}-based network for each group.  Note that this function has limited functionality and
 is intended only for immediate visualization of the networks.  To plot more sophisticated networks, please
 use the adj2ig() function along with plot.igraph().
 }

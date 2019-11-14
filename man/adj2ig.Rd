@@ -4,14 +4,14 @@
 \alias{adj2ig}
 \title{Create an \code{igraph} object from weighted adjacency matrix}
 \usage{
-adj2ig(w.adj = NULL, v.col = NULL, e.col = NULL)
+adj2ig(w.adj, v.col = NULL, e.col = NULL)
 }
 \arguments{
 \item{w.adj}{The weighted adjacency matrix to be converted to an \code{igraph} object}
 
-\item{v.col}{The vertex colours.  Numeric vector of length equal to number of OTUs in network}
+\item{v.col}{The vertex colours. Numeric vector of length equal to number of taxa in network.}
 
-\item{e.col}{The edge colour.  If NULL, then colour green/red based on positive/negative weights.}
+\item{e.col}{The edge colours.  Numeric vector of length equal to number of taxa in network. If NULL, then colour green/red based on positive/negative weights.}
 }
 \value{
 An object of class \code{igraph} corresponding to the provided adjacency matrix

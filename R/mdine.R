@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @aliases mdine
-#' @param ... Other arguments passed to `rstan::sampling`
+#' @param ... Other arguments passed to \code{\link{rstan::sampling}}
 #' @param Y The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
 #' the reference category, and is not included in the estimated network.
 #' @param X The model matrix (including an intercept column)
@@ -18,9 +18,9 @@
 #' networks within two groups.
 #'
 #'
-#' @return An object of class "mdine" containing posterior means for the model parameters, credible intervals,
+#' @return An object of class \code{mdine} containing posterior means for the model parameters, credible intervals,
 #' and the stanfit object.
-#' \item{stan.fit}{The object returned from rstan.  This can be used for MCMC diagnostics provided in the rstan package}
+#' \item{stan.fit}{The object returned from \code{\link{rstan}}.  This can be used for MCMC diagnostics provided in the \code{\link{rstan}} package}
 #' \item{post_mean}{List contatining estimated posterior means for the model parameters}
 #' \item{ci}{List contatining credible intervals for all parameters}
 #' \item{lam_mle}{Initial value of lambda used as mean in the prior distribution for lambda}
