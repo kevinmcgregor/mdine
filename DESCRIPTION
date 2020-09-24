@@ -1,5 +1,5 @@
 Package: mdine
-Version: 1.0.1
+Version: 1.0.2
 Title: Microbiome Differential Network Estimation 
 Description: Estimates precision matrix networks for two groups (as well as their difference) in microbiome sequencing data.  Model is based on McGregor, Labbe, and Greenwood (2019) <https://doi.org/10.1093/bioinformatics/btz824>.
 Authors@R: c(person("Kevin", "McGregor", email="kevin.mcgregor@mail.mcgill.ca", role=c("aut", "cre")),
@@ -9,9 +9,9 @@ License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-Depends: R (>= 3.4.0), Rcpp (>= 0.12.17), methods
-Imports: rstan (>= 2.17.3), rstantools (>= 1.5.0), MASS, nnet, igraph
-LinkingTo: StanHeaders (>= 2.17.2), rstan (>= 2.17.3), BH (>= 1.66.0-1), Rcpp (>= 0.12.17), RcppEigen (>= 0.3.3.4.0)
+Depends: R (>= 3.6.1), Rcpp (>= 1.0.4.6), methods
+Imports: rstan (>= 2.21.2), rstantools (>= 2.0.0), MASS, nnet, igraph
+LinkingTo: StanHeaders (>= 2.21.0-3), rstan (>= 2.21.2), BH (>= 1.72.0-3), Rcpp (>= 1.0.4.6), RcppEigen (>= 0.3.3.4.0)
 SystemRequirements: GNU make
 NeedsCompilation: yes
 RoxygenNote: 6.1.1
