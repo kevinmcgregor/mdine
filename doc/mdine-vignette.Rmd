@@ -90,7 +90,7 @@ Some other optional arguments are:
   - quant - Vector (length 2) specifying lower and upper quantiles for credible intervals.
   
 ### Example
-We apply **mdine** on a dataset containing samples from Chron's patients and controls (@gevers2014treatment).  The dataset included in this package contains a subset of only 100 samples from the original dataset.  The data come in the form of a list, where the first list element contains the covariates, and the second element contains the counts for 5 families, and a 6th ``reference'' category containing the sum of all remaining families.
+We apply **mdine** on a dataset containing samples from Chron's patients and controls (@gevers2014treatment).  The dataset included in this package contains a subset of only 100 samples from the original dataset.  The data come in the form of a list, where the first list element contains the covariates, and the second element contains the counts for 5 families, and a 6th ``reference'' OTU counts.
 
 ```{r}
 library(mdine)
