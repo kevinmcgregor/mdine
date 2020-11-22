@@ -1,12 +1,12 @@
 #' @importFrom nnet multinom
 #' @importFrom MASS ginv
 #' @importFrom stats coef cov
-get_lam_mle <- function(counts, covar, status) {
+get_lam_mle <- function(counts, covar, status, nnet.MaxNWts=NULL) {
   ref <- NCOL(counts)
   n.spec <- ref-1
 
   r.counts <- cbind(counts[,-ref], counts[,ref])
-  fit <- nnet::multinom(r.counts~covar[,-1], trace=FALSE)
+  fit <- nnet::multinom(r.counts~covar[,-1], trace=FALSE, MaxNWts=nnet.MaxNWts)
   resid <- log((counts[,-ref]+1)/(counts[,ref]+1))-tcrossprod(covar,coef(summary(fit)))
 
   #Covariance of residuals

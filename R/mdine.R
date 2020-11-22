@@ -2,6 +2,7 @@
 #'
 #' @export
 #' @aliases mdine
+#'
 #' @param ... Other arguments passed to \code{\link{rstan::sampling}}
 #' @param Y The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
 #' the reference category, and is not included in the estimated network.
@@ -13,6 +14,8 @@
 #' @param iter The number of MCMC iterations.  By default the first half of the iterations will be used as warmup.
 #' @param chains The number of MCMC chains.
 #' @param quant Vector containing the lower and upper quantiles of the posterior distribution to create credible intervals.
+#' @param nnet.MaxNWts Numeric specifying the maximum number of weights in the \code{nnet::multinom} call. This might need
+#' to be increased for a large number of OTUs. Defaults to 1000.
 #'
 #' @details MDiNE is a model based on multinomial logistic regression to estimate precision matrix-based
 #' networks within two groups.
@@ -37,7 +40,7 @@
 #' }
 #'
 mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=chains, iter=1000,
-                  chains=4, quant=c(0.025, 0.975), ...) {
+                  chains=4, quant=c(0.025, 0.975), nnet.MaxNWts=NULL, ...) {
 
   if (!is.matrix(Y) | any(floor(Y)!=Y) | any(Y<0)) stop("Y must be a numeric matrix containing positive counts")
   if (!is.matrix(X) | !is.numeric(X)) stop("X must be a numeric matrix")
@@ -56,7 +59,7 @@ mdine <- function(Y, X, Z, lambda=NULL, offset=NULL, mc.cores=chains, iter=1000,
   if (is.null(offset)) offset <- rep(0, n)
 
   if (is.null(lambda)) {
-    lam_mle <- get_lam_mle(Y, X, Z)
+    lam_mle <- get_lam_mle(Y, X, Z, nnet.MaxNWts)
     s.data <- list(counts=Y, covars=X, status=Z, n=n, k=k, p=p, lam_mle=lam_mle,
                     offset=offset)
   } else {
