@@ -15,7 +15,6 @@ if (!require(devtools)) {
   install.packages("devtools")
   library(devtools)
 }
-Sys.setenv(USE_CXX14=1)
 install_github("kevinmcgregor/mdine", dependencies=TRUE)
 ```
 
