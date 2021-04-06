@@ -168,7 +168,7 @@ plot_networks <- function(obj, v.col=NULL, e.col=NULL, lay0=layout_in_circle, la
 #' data(crohns)
 #'
 #' X <- model.matrix(~disease, data=crohns$covars)
-#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=100)
 #' adj <- ci2adj(md.fit, weighted = TRUE)
 #'
 #' ig0 <- adj2ig(adj$adj0)
