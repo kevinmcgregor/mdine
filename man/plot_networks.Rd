@@ -4,10 +4,19 @@
 \alias{plot_networks}
 \title{Plot a network (estimated from \code{mdine}) for each group}
 \usage{
-plot_networks(obj, v.col = NULL, e.col = NULL,
-  lay0 = layout_in_circle, lay1 = layout_in_circle, lab0 = "Group 0",
-  lab1 = "Group 1", scale_line_width = 30, vertex.size = 50,
-  vertex.labs = NULL, vertex.label.cex = NULL)
+plot_networks(
+  obj,
+  v.col = NULL,
+  e.col = NULL,
+  lay0 = layout_in_circle,
+  lay1 = layout_in_circle,
+  lab0 = "Group 0",
+  lab1 = "Group 1",
+  scale_line_width = 30,
+  vertex.size = 50,
+  vertex.labs = NULL,
+  vertex.label.cex = NULL
+)
 }
 \arguments{
 \item{obj}{An object of class \code{mdine}}
@@ -47,7 +56,7 @@ library(mdine)
 data(crohns)
 
 X <- model.matrix(~disease, data=crohns$covars)
-md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 plot_networks(md.fit)
 }
 

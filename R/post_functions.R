@@ -15,7 +15,7 @@
 #' data(crohns)
 #'
 #' X <- model.matrix(~disease, data=crohns$covars)
-#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 #' adj <- ci2adj(md.fit, weighted = TRUE)
 #' }
 #'
@@ -51,7 +51,7 @@ ci2adj <- function(obj, weighted=FALSE) {
 #' data(crohns)
 #'
 #' X <- model.matrix(~disease, data=crohns$covars)
-#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 #' sig_diff_prec(md.fit)
 #' }
 #'
@@ -94,7 +94,7 @@ sig_diff_prec <- function(obj) {
 #' data(crohns)
 #'
 #' X <- model.matrix(~disease, data=crohns$covars)
-#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+#' md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 #' plot_networks(md.fit)
 #' }
 #'

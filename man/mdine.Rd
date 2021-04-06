@@ -4,8 +4,19 @@
 \alias{mdine}
 \title{Microbiome differential network estimation}
 \usage{
-mdine(Y, X, Z, lambda = NULL, offset = NULL, mc.cores = chains,
-  iter = 1000, chains = 4, quant = c(0.025, 0.975), ...)
+mdine(
+  Y,
+  X,
+  Z,
+  lambda = NULL,
+  offset = NULL,
+  mc.cores = chains,
+  iter = 1000,
+  chains = 4,
+  quant = c(0.025, 0.975),
+  nnet.MaxNWts = NULL,
+  ...
+)
 }
 \arguments{
 \item{Y}{The (unrarefied) taxa count matrix with rows as samples and columns as taxa.  The last column is
@@ -26,6 +37,9 @@ the reference category, and is not included in the estimated network.}
 \item{chains}{The number of MCMC chains.}
 
 \item{quant}{Vector containing the lower and upper quantiles of the posterior distribution to create credible intervals.}
+
+\item{nnet.MaxNWts}{Numeric specifying the maximum number of weights in the \code{nnet::multinom} call. This might need
+to be increased for a large number of OTUs. Defaults to 1000.}
 
 \item{...}{Other arguments passed to \code{\link{rstan::sampling}}}
 }
@@ -50,7 +64,7 @@ library(mdine)
 data(crohns)
 
 X <- model.matrix(~disease, data=crohns$covars)
-md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=4, iter=1000)
+md.fit <- mdine(Y=crohns$otu.counts, X=X, Z=X[,2], mc.cores=1, iter=1000)
 }
 
 }
